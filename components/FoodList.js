@@ -5,9 +5,9 @@ import IconFilter from "./IconFilter";
 const FoodList = ({ foods, onDelete }) => {
   if (foods.length === 0) {
     return (
-      <View>
-        <Text style={styles.text}>No foods found.</Text>
-        <Text style={styles.text}>Start Adding your items!</Text>
+      <View style={styles.textContainer}>
+        <Text style={styles.text}>No items found.</Text>
+        <Text style={styles.text}>Start Adding items.</Text>
       </View>
     );
   }
@@ -34,13 +34,18 @@ const FoodList = ({ foods, onDelete }) => {
 };
 
 const styles = StyleSheet.create({
+  textContainer: {
+    position: "absolute",
+    transform: [{ translateY: 250 }],
+    alignSelf: "center",
+  },
   text: {
-    fontSize: 18,
+    fontSize: 16,
     textAlign: "center",
     paddingTop: 10,
   },
   itemText: {
-    fontSize: 17,
+    fontSize: 16,
   },
   itemContainer: {
     borderWidth: 0.5,

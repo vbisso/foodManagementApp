@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   Button,
   ScrollView,
+  Image,
+  Pressable,
 } from "react-native";
 import FoodForm from "../components/FoodForm";
 import FoodList from "../components/FoodList";
@@ -89,7 +91,10 @@ const HomeScreen = () => {
       {/* <View style={style.sortContainer}>
         <Text style={style.sortText}>Sort Foods By:</Text>
         <View style={style.buttonContainer}>
-          <Button title="Expiration Date" onPress={() => setSortBy("expDate")} />
+          <Button
+            title="Expiration Date"
+            onPress={() => setSortBy("expDate")}
+          />
           <Button title="Category" onPress={() => setSortBy("category")} />
           <Button title="Name" onPress={() => setSortBy("name")} />
         </View>
@@ -100,28 +105,44 @@ const HomeScreen = () => {
       </ScrollView>
 
       <View style={style.footerContainer}>
+        <View style={style.arrowContainer}>
+          <Image
+            style={style.arrowImage}
+            source={require("../assets/icons/arrow_icon.png")}
+          ></Image>
+          <Text style={style.arrowText}> Click here to add an item</Text>
+        </View>
+
         <View style={style.footer}>
-          <TouchableOpacity style={style.iconButton}>
-            <Text style={style.iconText}>⚙️</Text>
+          <TouchableOpacity>
+            <Image
+              style={style.fridgeViewButton}
+              source={require("../assets/icons/fridge_icon.png")}
+            />
+            <Text style={style.buttonText}>Fridge</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity
+          <Pressable
             onPress={() => setModalVisible(true)}
             style={style.addButton}
           >
-            <Text style={style.addButtonText}>+</Text>
-          </TouchableOpacity>
+            <Image
+              style={style.addButtonImage}
+              source={require("../assets/icons/add_button.png")}
+            />
+          </Pressable>
 
           {/* <TouchableOpacity onPress={() => setFilterModalVisible(true)} style={style.searchButton}>
             <Text style={style.iconText}>🔎</Text>
             <Button title="Open Filter" onPress={() => setIsFilterVisible(true)} />
 
           </TouchableOpacity> */}
-          <TouchableOpacity
-            onPress={() => setIsFilterVisible(true)}
-            style={style.searchButton}
-          >
-            <Text style={style.iconText}>🔎</Text>
+          <TouchableOpacity onPress={() => setIsFilterVisible(true)}>
+            <Image
+              style={style.pantryViewButton}
+              source={require("../assets/icons/pantry_icon.png")}
+            />
+            <Text style={style.buttonText}>Pantry</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -175,40 +196,58 @@ const style = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     bottom: 0,
-    backgroundColor: "#5CB85C",
+    backgroundColor: "#fffff",
     paddingTop: 15,
     paddingBottom: 30,
+    borderTopWidth: 1,
+    borderTopColor: "#ccc",
   },
-  iconButton: {
+  fridgeViewButton: {
     paddingVertical: 10,
     paddingHorizontal: 5,
-    borderRadius: 10,
-    width: 50,
-  },
-  iconText: {
-    fontSize: 30,
-    textAlign: "center",
-  },
-  addButton: {
-    backgroundColor: "white",
-    paddingVertical: 10,
-    paddingHorizontal: 5,
-    borderRadius: 10,
-    width: 50,
-  },
-  addButtonText: {
-    color: "black",
-    fontSize: 30,
-    textAlign: "center",
-  },
-  searchButton: {
-    backgroundColor: "#5cb85c",
-    paddingVertical: 10,
-    paddingHorizontal: 5,
-    borderRadius: 10,
-    width: 50,
+    width: 36,
+    height: 56,
     justifyContent: "center",
     alignItems: "center",
+  },
+  addButton: {
+    paddingHorizontal: 5,
+    position: "absolute",
+    top: -30,
+  },
+  addButtonImage: {
+    width: 60,
+    height: 60,
+  },
+  pantryViewButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 5,
+    width: 40,
+    height: 55,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  buttonText: {
+    fontSize: 12,
+    textAlign: "center",
+    color: "#A0A0A0",
+  },
+  arrowContainer: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 30,
+    justifyContent: "center",
+    marginLeft: 155,
+  },
+  arrowImage: {
+    width: 30,
+    height: 30,
+  },
+  arrowText: {
+    fontSize: 12,
+    textAlign: "center",
+    color: "#A0A0A0",
   },
 });
 
