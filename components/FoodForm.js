@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TextInput, Button } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import { Picker } from "@react-native-picker/picker";
+import { TouchableOpacity, FlatList } from "react-native";
 
 const FoodForm = ({ onSave, onClose }) => {
   const [name, setName] = useState("");
@@ -19,31 +21,68 @@ const FoodForm = ({ onSave, onClose }) => {
     onClose();
   };
 
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  const categories = [
+    "Fruit",
+    "Vegetable",
+    "Grain",
+    "Meat",
+    "Juice",
+    "Dairy",
+    "Sweet",
+  ];
+
   return (
     <View style={styles.container}>
       <View style={styles.inputsContainer}>
-        <Text style={styles.text}>Add Food Item</Text>
+        <Text style={styles.text}>Enter Food Details</Text>
+
         <TextInput
           style={styles.nameInput}
           onChangeText={setName}
           value={name}
-          placeholder="Item Name"
+          placeholder="Enter Name"
           placeholderTextColor={"gray"}
         />
 
         <View style={styles.container2}>
           <Text style={styles.text}>Category: {category || "None"}</Text>
-          <View style={styles.gridContainer}>
-            <Button title="Fruit" onPress={() => setCategory("Fruit")} />
-            <Button
-              title="Vegetable"
-              onPress={() => setCategory("Vegetable")}
-            />
-            <Button title="Grain" onPress={() => setCategory("Grain")} />
-            <Button title="Meat" onPress={() => setCategory("Meat")} />
-            <Button title="Juice" onPress={() => setCategory("Juice")} />
-            <Button title="Dairy" onPress={() => setCategory("Dairy")} />
-            <Button title="Sweet" onPress={() => setCategory("Sweet")} />
+          <View style={styles.dropdownContainer}>
+            <TouchableOpacity
+              style={styles.dropdownButton}
+              onPress={() => setShowDropdown(!showDropdown)}
+            >
+              <Text
+                style={[
+                  styles.dropdownButtonText,
+                  !category && styles.placeholder,
+                ]}
+              >
+                {category || "Select a category..."}
+              </Text>
+              <Text style={styles.dropdownArrow}>▼</Text>
+            </TouchableOpacity>
+
+            {showDropdown && (
+              <View style={styles.dropdownList}>
+                <FlatList
+                  data={categories}
+                  keyExtractor={(item) => item}
+                  renderItem={({ item }) => (
+                    <TouchableOpacity
+                      style={styles.dropdownItem}
+                      onPress={() => {
+                        setCategory(item);
+                        setShowDropdown(false);
+                      }}
+                    >
+                      <Text style={styles.dropdownItemText}>{item}</Text>
+                    </TouchableOpacity>
+                  )}
+                />
+              </View>
+            )}
           </View>
         </View>
 
@@ -104,13 +143,13 @@ const styles = StyleSheet.create({
   nameInput: {
     borderColor: "gray",
     borderWidth: 0.2,
-    borderRadius: 10,
+    borderRadius: 8,
     paddingHorizontal: 10,
     paddingVertical: 15,
     marginBottom: 20,
-    width: 500,
-    maxWidth: "70%",
-    textAlign: "center",
+    width: "100%",
+    maxWidth: "90%",
+    textAlign: "left",
   },
   datePicker: {
     //display: "flex",
@@ -135,6 +174,77 @@ const styles = StyleSheet.create({
     bottom: 25,
     width: "100%",
   },
+  pickerContainer: {
+    marginBottom: 15,
+  },
+  label: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginBottom: 5,
+    color: "#333",
+  },
+  pickerWrapper: {
+    borderWidth: 1,
+    borderColor: "#ddd",
+    borderRadius: 8,
+    backgroundColor: "#fff",
+  },
+  picker: {
+    height: 50,
+  },
+  dropdownContainer: {
+    marginBottom: 15,
+    zIndex: 1000,
+  },
+  label: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginBottom: 5,
+    color: "#333",
+  },
+  dropdownButton: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "#ddd",
+    borderRadius: 8,
+    padding: 15,
+    backgroundColor: "#fff",
+  },
+  dropdownButtonText: {
+    fontSize: 16,
+    color: "#000",
+  },
+  placeholder: {
+    color: "#999",
+  },
+  dropdownArrow: {
+    fontSize: 12,
+    color: "#666",
+  },
+  dropdownList: {
+    position: "absolute",
+    top: "100%",
+    left: 0,
+    right: 0,
+    backgroundColor: "#fff",
+    borderWidth: 1,
+    borderColor: "#ddd",
+    borderTopWidth: 0,
+    borderBottomLeftRadius: 8,
+    borderBottomRightRadius: 8,
+    maxHeight: 200,
+    zIndex: 1000,
+  },
+  dropdownItem: {
+    padding: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: "#eee",
+  },
+  dropdownItemText: {
+    fontSize: 16,
+    color: "#333",
+  },
 });
-
 export default FoodForm;

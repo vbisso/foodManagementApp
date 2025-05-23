@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Modal,
   Animated,
@@ -14,9 +14,10 @@ const { height } = Dimensions.get("window");
 
 const FoodModal = ({ visible, onClose, onSave }) => {
   const [slideAnimation] = useState(new Animated.Value(1000)); // starts off-screen
-  const [isModalVisible, setIsModalVisible] = useState(visible);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const openModal = () => {
+    setIsModalVisible(true);
     Animated.spring(slideAnimation, {
       toValue: 0,
       friction: 10,
@@ -27,18 +28,20 @@ const FoodModal = ({ visible, onClose, onSave }) => {
 
   const closeModal = () => {
     setIsModalVisible(false); //closing modal (includes the blurred background)
+    onClose();
     Animated.spring(slideAnimation, {
       toValue: 1000,
       friction: 0,
       tension: 0,
       useNativeDriver: true,
-    }).start(() => {
-      onClose();
-    });
+    }).start();
+    // .start(() => {
+    //   onClose();
+    // });
   };
 
   //open modal when visible changes
-  React.useEffect(() => {
+  useEffect(() => {
     if (visible) {
       setIsModalVisible(true);
       openModal();
@@ -49,7 +52,7 @@ const FoodModal = ({ visible, onClose, onSave }) => {
     <Modal
       animationType="fade"
       transparent={true}
-      visible={isModalVisible}
+      visible={visible}
       onRequestClose={closeModal}
     >
       <TouchableOpacity style={styles.overlay} activeOpacity={1}>
