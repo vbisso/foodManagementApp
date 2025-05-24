@@ -19,9 +19,7 @@ const HomeScreen = () => {
   const [foods, setFoods] = useState([]);
   const [sortBy, setSortBy] = useState("expDate");
   const [modalVisible, setModalVisible] = useState(false);
-  const [filterModalVisible, setFilterModalVisible] = useState(false);
   const [isFilterVisible, setIsFilterVisible] = useState(false);
-  const [sortCriteria, setSortCriteria] = useState(null);
 
   useEffect(() => {
     loadFoods();
@@ -88,30 +86,21 @@ const HomeScreen = () => {
 
   return (
     <View style={style.container}>
-      {/* <View style={style.sortContainer}>
-        <Text style={style.sortText}>Sort Foods By:</Text>
-        <View style={style.buttonContainer}>
-          <Button
-            title="Expiration Date"
-            onPress={() => setSortBy("expDate")}
-          />
-          <Button title="Category" onPress={() => setSortBy("category")} />
-          <Button title="Name" onPress={() => setSortBy("name")} />
-        </View>
-      </View> */}
-
       <ScrollView style={style.foodList}>
         <FoodList foods={foods} onDelete={onDelete} />
       </ScrollView>
 
       <View style={style.footerContainer}>
-        <View style={style.arrowContainer}>
-          <Image
-            style={style.arrowImage}
-            source={require("../assets/icons/arrow_icon.png")}
-          ></Image>
-          <Text style={style.arrowText}> Click here to add an item</Text>
-        </View>
+        {foods.length === 0 && (
+          <View style={style.arrowContainer}>
+            <Image
+              style={style.arrowImage}
+              source={require("../assets/icons/arrow_icon.png")}
+            ></Image>
+
+            <Text style={style.arrowText}> Click here to add an item</Text>
+          </View>
+        )}
 
         <View style={style.footer}>
           <TouchableOpacity>
@@ -132,11 +121,6 @@ const HomeScreen = () => {
             />
           </Pressable>
 
-          {/* <TouchableOpacity onPress={() => setFilterModalVisible(true)} style={style.searchButton}>
-            <Text style={style.iconText}>🔎</Text>
-            <Button title="Open Filter" onPress={() => setIsFilterVisible(true)} />
-
-          </TouchableOpacity> */}
           <TouchableOpacity onPress={() => setIsFilterVisible(true)}>
             <Image
               style={style.pantryViewButton}

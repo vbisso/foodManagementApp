@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   modalContent: {
-    backgroundColor: "white",
+    backgroundColor: "#ECECEC",
     padding: 20,
     borderRadius: 10,
     width: "80%",
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
   closeButton: {
     marginTop: 15,
     padding: 10,
-    backgroundColor: "#ff4444",
+    backgroundColor: "#007bff",
     borderRadius: 5,
   },
   closeText: {

@@ -35,9 +35,6 @@ const FoodModal = ({ visible, onClose, onSave }) => {
       tension: 0,
       useNativeDriver: true,
     }).start();
-    // .start(() => {
-    //   onClose();
-    // });
   };
 
   //open modal when visible changes
@@ -60,7 +57,7 @@ const FoodModal = ({ visible, onClose, onSave }) => {
           style={[
             styles.modalContent,
             {
-              height: height * 0.8,
+              height: height * 0.65,
               transform: [{ translateY: slideAnimation }],
               bottom: 0,
               position: "absolute",
@@ -83,7 +80,7 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     width: "100%",
-    backgroundColor: "white",
+    backgroundColor: "#ECECEC",
     padding: 20,
     alignItems: "center",
     borderTopLeftRadius: 15,

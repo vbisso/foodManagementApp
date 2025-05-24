@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, Button, StyleSheet } from "react-native";
 import IconFilter from "./IconFilter";
+import FoodItem from "./FoodItem";
 
 const FoodList = ({ foods, onDelete }) => {
   if (foods.length === 0) {
@@ -16,17 +17,24 @@ const FoodList = ({ foods, onDelete }) => {
       <Text style={[{ marginBottom: 15 }, styles.text]}>Your Foods</Text>
       {foods.map((food, index) => (
         <View style={styles.itemContainer} key={index}>
-          <IconFilter category={food.category} />
+          <FoodItem
+            value={food}
+            onDelete={() => onDelete(index)}
+            onEdit={() => onDelete(index)}
+          ></FoodItem>
 
+          {/* <IconFilter category={food.category} />
           <View style={styles.itemTextContainer}>
             <Text style={styles.itemText}>{food.name}</Text>
             <Text style={styles.itemText}>
               Exp. Date: {food.expDate.toDateString()}
             </Text>
+            <Text style={styles.itemText}>Quantity: {food.quantity}</Text>
+            <Text style={styles.itemText}>View: {food.view}</Text>
           </View>
           <View>
             <Button title="Delete" onPress={() => onDelete(index)} />
-          </View>
+          </View> */}
         </View>
       ))}
     </View>
@@ -48,23 +56,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   itemContainer: {
-    borderWidth: 0.5,
-    borderColor: "grey",
-
-    marginBottom: 10,
     padding: 10,
-    borderRadius: 10,
     flex: 1,
     flexDirection: "row",
     alignSelf: "center",
-    //justifyContent: "space-around",
-  },
-  itemTextContainer: {
-    //flex: 1,
-    marginLeft: 10,
-    marginRight: 10,
-    alignItems: "flex-start",
-    //borderWidth: 1,
   },
 });
 
