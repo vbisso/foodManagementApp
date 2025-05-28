@@ -9,42 +9,73 @@ import {
 
 const ViewPicker = ({ value, setView }) => {
   const [showDropdown, setShowDropdown] = useState(false);
-  const views = ["List", "Pantry", "Fridge"];
+  // const views = ["List", "Pantry", "Fridge"];
   return (
-    <View style={styles.dropdownContainer}>
-      <TouchableOpacity
-        style={styles.dropdownButton}
-        onPress={() => setShowDropdown(!showDropdown)}
-      >
-        <Text style={[styles.dropdownButtonText, !value && styles.placeholder]}>
-          {value || "Save to..."}
-        </Text>
-        <Text style={styles.dropdownArrow}>▼</Text>
-      </TouchableOpacity>
-
-      {showDropdown && (
-        <View style={styles.dropdownList}>
-          <FlatList
-            data={views}
-            keyExtractor={(item) => item}
-            renderItem={({ item }) => (
-              <TouchableOpacity
-                style={styles.dropdownItem}
-                onPress={() => {
-                  setView(item);
-                  setShowDropdown(false);
-                }}
-              >
-                <Text style={styles.dropdownItemText}>{item}</Text>
-              </TouchableOpacity>
-            )}
-          />
-        </View>
-      )}
+    <View>
+      <Text>Save to:</Text>
+      <View style={styles.viewsContainer}>
+        <TouchableOpacity style={styles.view} onPress={() => setView("List")}>
+          <Text>List</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.view} onPress={() => setView("Fridge")}>
+          <Text>Fridge</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.view} onPress={() => setView("Pantry")}>
+          <Text>Pantry</Text>
+        </TouchableOpacity>
+      </View>
     </View>
+    // <View style={styles.dropdownContainer}>
+    //   <TouchableOpacity
+    //     style={styles.dropdownButton}
+    //     onPress={() => setShowDropdown(!showDropdown)}
+    //   >
+    //     <Text style={[styles.dropdownButtonText, !value && styles.placeholder]}>
+    //       {value || "Save to..."}
+    //     </Text>
+    //     <Text style={styles.dropdownArrow}>▼</Text>
+    //   </TouchableOpacity>
+
+    //   {showDropdown && (
+    //     <View style={styles.dropdownList}>
+    //       <FlatList
+    //         data={views}
+    //         keyExtractor={(item) => item}
+    //         renderItem={({ item }) => (
+    //           <TouchableOpacity
+    //             style={styles.dropdownItem}
+    //             onPress={() => {
+    //               setView(item);
+    //               setShowDropdown(false);
+    //             }}
+    //           >
+    //             <Text style={styles.dropdownItemText}>{item}</Text>
+    //           </TouchableOpacity>
+    //         )}
+    //       />
+    //     </View>
+    //   )}
+    // </View>
   );
 };
 const styles = StyleSheet.create({
+  viewsContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    marginTop: 10,
+    width: "100%",
+  },
+  view: {
+    borderColor: "grey",
+    borderWidth: 0.2,
+    borderRadius: 8,
+    padding: 10,
+    paddingVertical: 15,
+    justifySelf: "center",
+    width: "30%",
+    alignItems: "center",
+  },
   dropdownContainer: {
     zIndex: 1000,
   },

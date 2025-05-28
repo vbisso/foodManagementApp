@@ -1,5 +1,16 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TextInput, Button } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  Button,
+  Keyboard,
+  TouchableWithoutFeedback,
+  KeyboardAvoidingView,
+  Platform,
+  ImageBackground,
+} from "react-native";
 import QuantityStepper from "./UI/QuantityStepper";
 import DatePicker from "./UI/DatePicker";
 import CategoryPicker from "./UI/CategoryPicker";
@@ -29,25 +40,30 @@ const FoodForm = ({ onSave, onClose }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Enter Food Details</Text>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <View style={styles.container}>
+          <Text style={styles.text}>Add a New Food Item</Text>
+          <NameInput value={name} onChange={setName}></NameInput>
+          <CategoryPicker
+            value={category}
+            setCategory={setCategory}
+          ></CategoryPicker>
+          <DatePicker value={date} setDate={setDate}></DatePicker>
+          <QuantityStepper value={quantity} onChange={setQuantity} />
+          <ViewPicker value={view} setView={setView}></ViewPicker>
 
-      <NameInput value={name} onChange={setName}></NameInput>
-      <CategoryPicker
-        value={category}
-        setCategory={setCategory}
-      ></CategoryPicker>
-      <DatePicker value={date} setDate={setDate}></DatePicker>
-      <QuantityStepper value={quantity} onChange={setQuantity} />
-      <ViewPicker value={view} setView={setView}></ViewPicker>
-
-      <View style={styles.buttonFixPosition}>
-        <View style={styles.buttonsContainer}>
-          <Button title="Cancel" onPress={handleCancel} />
-          <Button title="Save" onPress={handleSave} />
+          <View style={styles.buttonFixPosition}>
+            <View style={styles.buttonsContainer}>
+              <Button title="Cancel" onPress={handleCancel} />
+              <Button title="Save" onPress={handleSave} />
+            </View>
+          </View>
         </View>
-      </View>
-    </View>
+      </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
   );
 };
 

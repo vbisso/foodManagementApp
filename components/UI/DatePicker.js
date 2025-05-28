@@ -5,7 +5,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 const DatePicker = ({ value, setDate }) => {
   return (
     <View style={styles.datePickerContainer}>
-      <Text style={styles.datePickerText}>Expiration Date</Text>
+      <Text style={styles.datePickerText}>Select the exp. date</Text>
       <DateTimePicker
         style={styles.datePicker}
         value={value}
@@ -25,18 +25,14 @@ const styles = StyleSheet.create({
   datePickerContainer: {
     display: "flex",
     flexDirection: "row",
+    alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: "white",
-    borderRadius: 8,
-    borderColor: "#A0A0A0",
-    paddingHorizontal: 10,
-    paddingVertical: 15,
     width: "100%",
   },
   datePickerText: {
-    alignSelf: "center",
     fontSize: 16,
-    color: "#000",
+    marginBottom: 5,
+    paddingLeft: 5,
   },
   datePicker: {
     width: "100%",

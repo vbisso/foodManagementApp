@@ -19,7 +19,7 @@ const FoodModal = ({ visible, onClose, onSave }) => {
   const openModal = () => {
     setIsModalVisible(true);
     Animated.spring(slideAnimation, {
-      toValue: 0,
+      toValue: -150,
       friction: 10,
       tension: 40,
       useNativeDriver: true,
@@ -57,10 +57,7 @@ const FoodModal = ({ visible, onClose, onSave }) => {
           style={[
             styles.modalContent,
             {
-              height: height * 0.65,
               transform: [{ translateY: slideAnimation }],
-              bottom: 0,
-              position: "absolute",
             },
           ]}
         >
@@ -79,12 +76,17 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   modalContent: {
-    width: "100%",
-    backgroundColor: "#ECECEC",
+    height: height * 0.65,
+    width: "90%",
+    backgroundColor: "white",
     padding: 20,
+    borderRadius: 15,
     alignItems: "center",
-    borderTopLeftRadius: 15,
-    borderTopRightRadius: 15,
+    elevation: 5, // for Android shadow
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
   },
 });
 

@@ -13,6 +13,7 @@ const CategoryPicker = ({ value, setCategory }) => {
 
   return (
     <View style={styles.dropdownContainer}>
+      <Text style={styles.label}>Category</Text>
       <TouchableOpacity
         style={styles.dropdownButton}
         onPress={() => setShowDropdown(!showDropdown)}
@@ -48,17 +49,18 @@ const CategoryPicker = ({ value, setCategory }) => {
 
 const styles = StyleSheet.create({
   dropdownContainer: {
-    zIndex: 1000,
+    zIndex: 1200,
   },
 
   dropdownButton: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: "white",
+    backgroundColor: "#F0F0F0",
+    color: "#000",
     borderRadius: 8,
     paddingHorizontal: 10,
-    paddingVertical: 20,
+    paddingVertical: 15,
     width: "100%",
   },
   dropdownButtonText: {
@@ -77,7 +79,7 @@ const styles = StyleSheet.create({
     top: "100%",
     left: 0,
     right: 0,
-    backgroundColor: "#fff",
+    backgroundColor: "#FBFCFD",
     borderWidth: 0.2,
     borderColor: "grey",
     borderTopWidth: 0,
@@ -94,6 +96,11 @@ const styles = StyleSheet.create({
   dropdownItemText: {
     fontSize: 16,
     color: "#333",
+  },
+  label: {
+    fontSize: 16,
+    marginBottom: 5,
+    paddingLeft: 5,
   },
 });
 

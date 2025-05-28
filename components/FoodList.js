@@ -14,7 +14,6 @@ const FoodList = ({ foods, onDelete }) => {
   }
   return (
     <View>
-      <Text style={[{ marginBottom: 15 }, styles.text]}>Your Foods</Text>
       {foods.map((food, index) => (
         <View style={styles.itemContainer} key={index}>
           <FoodItem
