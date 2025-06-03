@@ -1,27 +1,26 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  FlatList,
-} from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 
 const ViewPicker = ({ value, setView }) => {
-  const [showDropdown, setShowDropdown] = useState(false);
-  // const views = ["List", "Pantry", "Fridge"];
   return (
     <View>
-      <Text>Save to:</Text>
+      <Text style={styles.label}>Save to:</Text>
       <View style={styles.viewsContainer}>
-        <TouchableOpacity style={styles.view} onPress={() => setView("List")}>
-          <Text>List</Text>
+        <TouchableOpacity
+          style={[styles.button, value == "Fridge" && styles.buttonPressed]}
+          onPress={() => setView("Fridge")}
+        >
+          <Text style={value == "Fridge" && styles.buttonPressedText}>
+            Fridge
+          </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.view} onPress={() => setView("Fridge")}>
-          <Text>Fridge</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.view} onPress={() => setView("Pantry")}>
-          <Text>Pantry</Text>
+        <TouchableOpacity
+          style={[styles.button, value == "Pantry" && styles.buttonPressed]}
+          onPress={() => setView("Pantry")}
+        >
+          <Text style={value == "Pantry" && styles.buttonPressedText}>
+            Pantry
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -61,68 +60,33 @@ const ViewPicker = ({ value, setView }) => {
 const styles = StyleSheet.create({
   viewsContainer: {
     flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-    marginTop: 10,
-    width: "100%",
-  },
-  view: {
-    borderColor: "grey",
-    borderWidth: 0.2,
-    borderRadius: 8,
-    padding: 10,
-    paddingVertical: 15,
-    justifySelf: "center",
-    width: "30%",
-    alignItems: "center",
-  },
-  dropdownContainer: {
-    zIndex: 1000,
-  },
-
-  dropdownButton: {
-    flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: "white",
-    borderRadius: 8,
-    paddingHorizontal: 10,
-    paddingVertical: 20,
     width: "100%",
   },
-  dropdownButtonText: {
+  label: {
     fontSize: 16,
-    color: "#000",
+    marginBottom: 5,
+    paddingLeft: 5,
   },
-  placeholder: {
-    color: "grey",
-  },
-  dropdownArrow: {
-    fontSize: 12,
-    color: "#666",
-  },
-  dropdownList: {
-    position: "absolute",
-    top: "100%",
-    left: 0,
-    right: 0,
-    backgroundColor: "#fff",
+  button: {
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    width: "48%",
+    alignItems: "center",
     borderWidth: 0.2,
     borderColor: "grey",
-    borderTopWidth: 0,
-    borderBottomLeftRadius: 8,
-    borderBottomRightRadius: 8,
-    maxHeight: 150,
-    zIndex: 1000,
   },
-  dropdownItem: {
-    padding: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: "#eee",
+  buttonPressed: {
+    backgroundColor: "#007AFF",
+    color: "white",
   },
-  dropdownItemText: {
-    fontSize: 16,
-    color: "#333",
+  buttonText: {
+    textAlign: "center",
+  },
+  buttonPressedText: {
+    color: "white",
   },
 });
 

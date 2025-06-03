@@ -114,22 +114,22 @@ const styles = StyleSheet.create({
   },
   dropdownContainer: {
     zIndex: 1000,
+    width: "60%",
+    height: "100%",
   },
 
   dropdownButton: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-
-    // paddingHorizontal: 50,
+    justifyContent: "space-between",
     alignItems: "center",
     backgroundColor: "#F0F0F0",
     color: "#000",
     borderRadius: 8,
-    // padding: 10,
     height: "100%",
     width: "100%",
+    paddingHorizontal: 10,
+    paddingVertical: 15,
   },
   dropdownButtonText: {
     fontSize: 16,

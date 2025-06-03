@@ -12,7 +12,7 @@ import FoodForm from "./FoodForm";
 
 const { height } = Dimensions.get("window");
 
-const FoodModal = ({ visible, onClose, onSave }) => {
+const FoodModal = ({ visible, onClose, onSave, selectedFood }) => {
   const [slideAnimation] = useState(new Animated.Value(1000)); // starts off-screen
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -37,6 +37,11 @@ const FoodModal = ({ visible, onClose, onSave }) => {
     }).start();
   };
 
+  // Handle overlay tap to close modal
+  const handleOverlayPress = () => {
+    closeModal();
+  };
+
   //open modal when visible changes
   useEffect(() => {
     if (visible) {
@@ -52,7 +57,11 @@ const FoodModal = ({ visible, onClose, onSave }) => {
       visible={visible}
       onRequestClose={closeModal}
     >
-      <TouchableOpacity style={styles.overlay} activeOpacity={1}>
+      <TouchableOpacity
+        style={styles.overlay}
+        activeOpacity={1}
+        onPress={handleOverlayPress}
+      >
         <Animated.View
           style={[
             styles.modalContent,
@@ -61,7 +70,12 @@ const FoodModal = ({ visible, onClose, onSave }) => {
             },
           ]}
         >
-          <FoodForm onSave={onSave} onClose={closeModal} />
+          <FoodForm
+            onSave={onSave}
+            onClose={closeModal}
+            selectedFood={selectedFood}
+            isEditing={!!selectedFood}
+          />
         </Animated.View>
       </TouchableOpacity>
     </Modal>
@@ -76,12 +90,13 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   modalContent: {
-    height: height * 0.65,
+    alignItems: "center",
+    justifyContent: "center",
+    height: height * 0.58,
     width: "90%",
     backgroundColor: "white",
     padding: 20,
     borderRadius: 15,
-    alignItems: "center",
     elevation: 5, // for Android shadow
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },

@@ -1,15 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
   StyleSheet,
-  TextInput,
-  Button,
   Keyboard,
   TouchableWithoutFeedback,
   KeyboardAvoidingView,
   Platform,
-  ImageBackground,
+  TouchableOpacity,
 } from "react-native";
 import QuantityStepper from "./UI/QuantityStepper";
 import DatePicker from "./UI/DatePicker";
@@ -17,25 +15,83 @@ import CategoryPicker from "./UI/CategoryPicker";
 import NameInput from "./UI/NameInput";
 import ViewPicker from "./UI/ViewPicker";
 
-const FoodForm = ({ onSave, onClose }) => {
+const FoodForm = ({ onSave, onClose, selectedFood, isEditing }) => {
   const [name, setName] = useState("");
   const [category, setCategory] = useState("");
   const [date, setDate] = useState(new Date());
   const [quantity, setQuantity] = useState(1);
+  const [unit, setUnit] = useState("");
   const [view, setView] = useState("");
 
-  const handleSave = () => {
-    if (name && category) {
-      onSave({ name, category, expDate: new Date(date), quantity, view });
-      setName("");
-      setCategory("");
-      setDate(new Date());
-      setQuantity(1);
-      setView("");
-      onClose();
+  // Pre-populate form fields when editing a food item
+  useEffect(() => {
+    if (selectedFood) {
+      setName(selectedFood.name || "");
+      setCategory(selectedFood.category || "");
+      setDate(
+        selectedFood.expDate ? new Date(selectedFood.expDate) : new Date()
+      );
+      setQuantity(selectedFood.quantity || 1);
+      setUnit(selectedFood.unit || "");
+      setView(selectedFood.view || "");
+    } else {
+      resetForm();
     }
+  }, [selectedFood]);
+
+  const resetForm = () => {
+    setName("");
+    setCategory("");
+    setDate(new Date());
+    setQuantity(1);
+    setUnit("");
+    setView("");
   };
+
+  const handleSave = () => {
+    // Basic validation
+    if (!name.trim()) {
+      alert("Please enter a food name");
+      return;
+    }
+    if (!category) {
+      alert("Please select a category");
+      return;
+    }
+
+    const foodData = {
+      name: name.trim(),
+      category,
+      expDate: new Date(date),
+      quantity,
+      unit,
+      view,
+    };
+
+    // Include id if editing existing food
+    if (isEditing && selectedFood?.id) {
+      foodData.id = selectedFood.id;
+    }
+
+    onSave(foodData);
+    // Don't reset or close here; parent handles success/error
+  };
+
+  // const handleSave = () => {
+  //   if (name && category) {
+  //     onSave({ name, category, expDate: new Date(date), quantity, unit, view });
+  //     setName("");
+  //     setCategory("");
+  //     setDate(new Date());
+  //     setQuantity(1);
+  //     setUnit("");
+  //     setView("");
+  //     onClose();
+  //   }
+  // };
+
   const handleCancel = () => {
+    resetForm();
     onClose();
   };
 
@@ -45,20 +101,34 @@ const FoodForm = ({ onSave, onClose }) => {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
         <View style={styles.container}>
-          <Text style={styles.text}>Add a New Food Item</Text>
-          <NameInput value={name} onChange={setName}></NameInput>
-          <CategoryPicker
-            value={category}
-            setCategory={setCategory}
-          ></CategoryPicker>
-          <DatePicker value={date} setDate={setDate}></DatePicker>
-          <QuantityStepper value={quantity} onChange={setQuantity} />
-          <ViewPicker value={view} setView={setView}></ViewPicker>
+          <View style={styles.foodFormContainer}>
+            <Text style={styles.text}>
+              {selectedFood ? "Edit Food Item" : "Add Food Item"}
+            </Text>
+            <NameInput value={name} onChange={setName}></NameInput>
+            <CategoryPicker
+              value={category}
+              setCategory={setCategory}
+            ></CategoryPicker>
+            <DatePicker value={date} setDate={setDate}></DatePicker>
+            <QuantityStepper
+              value={quantity}
+              onChange={setQuantity}
+              unit={unit}
+              setUnit={setUnit}
+            />
+            <ViewPicker value={view} setView={setView}></ViewPicker>
+          </View>
 
           <View style={styles.buttonFixPosition}>
             <View style={styles.buttonsContainer}>
-              <Button title="Cancel" onPress={handleCancel} />
-              <Button title="Save" onPress={handleSave} />
+              <TouchableOpacity onPress={handleCancel} style={styles.cancelBtn}>
+                <Text style={styles.cancelBtnText}>Cancel</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={handleSave} style={styles.saveBtn}>
+                <Text style={styles.saveBtnText}>Save</Text>
+              </TouchableOpacity>
             </View>
           </View>
         </View>
@@ -68,27 +138,59 @@ const FoodForm = ({ onSave, onClose }) => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    height: "100%",
+  },
+  foodFormContainer: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 10,
+    alignItems: "center",
+    height: "100%",
+  },
   text: {
     fontSize: 20,
     fontWeight: "450",
     marginBottom: 10,
   },
-  container: {
-    flex: 1,
-    justifyContent: "start",
-    paddingVertical: 20,
-    alignItems: "center",
-    gap: 10,
-    marginBottom: 10,
-  },
+
   buttonsContainer: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "space-around",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "100%",
+  },
+  cancelBtn: {
+    backgroundColor: "#B8B7B7",
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    width: "40%",
+    alignItems: "center",
+  },
+  cancelBtnText: {
+    color: "white",
+    fontSize: 16,
+  },
+  saveBtn: {
+    backgroundColor: "#007AFF",
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    width: "40%",
+    alignItems: "center",
+  },
+  saveBtnText: {
+    color: "white",
+    fontSize: 16,
   },
   buttonFixPosition: {
     position: "absolute",
-    bottom: 25,
+    bottom: 0,
     width: "100%",
   },
 });

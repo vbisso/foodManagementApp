@@ -4,90 +4,62 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Button,
   ScrollView,
   Image,
   Pressable,
 } from "react-native";
-import FoodForm from "../components/FoodForm";
+
 import FoodList from "../components/FoodList";
 import FoodModal from "../components/FoodModal";
 import FilterModal from "../components/FilterModal";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import useFoodData from "../hooks/useFoodData";
 
 const HomeScreen = () => {
-  const [foods, setFoods] = useState([]);
   const [sortBy, setSortBy] = useState("expDate");
   const [modalVisible, setModalVisible] = useState(false);
   const [isFilterVisible, setIsFilterVisible] = useState(false);
+  const { foods, saveFoods, deleteFood } = useFoodData(sortBy);
+  const [selectedFood, setSelectedFood] = useState(null);
 
-  useEffect(() => {
-    loadFoods();
-  }, []);
+  // const handleSortChange = (criterion) => {
+  //   setSortBy(criterion); // Update sorting criteria
+  //   setIsFilterVisible(false); // Close the modal after selecting
+  // };
 
-  useEffect(() => {
-    setFoods((prevFoods) => sortFoods([...prevFoods], sortBy));
-  }, [sortBy]);
-
-  const handleSortChange = (criterion) => {
-    console.log("Sorting by:", criterion);
-    setSortBy(criterion); // Update sorting criteria
-    setIsFilterVisible(false); // Close the modal after selecting
+  const handleAddFood = () => {
+    setSelectedFood(null); // Clear selection for new food
+    setModalVisible(true);
+  };
+  const handleDeleteFood = (index) => {
+    deleteFood(index);
+  };
+  const handleEditFood = (food) => {
+    setSelectedFood(food); // Set selected food for editing
+    setModalVisible(true);
   };
 
-  const sortFoods = (foods, criterion) => {
-    return foods.sort((a, b) => {
-      if (criterion === "expDate") {
-        return new Date(a.expDate) - new Date(b.expDate);
-      } else if (criterion === "category") {
-        return a.category.localeCompare(b.category);
-      } else if (criterion === "name") {
-        return a.name.localeCompare(b.name);
-      }
-      return 0;
-    });
+  const handleCloseModal = () => {
+    setModalVisible(false);
+    setSelectedFood(null); // Clear selection when closing
   };
 
-  const loadFoods = async () => {
+  const handleSaveFood = async (foodData) => {
     try {
-      const storedFoods = await AsyncStorage.getItem("foods");
-      if (storedFoods) {
-        const foodsWithDates = JSON.parse(storedFoods).map((food) => ({
-          ...food,
-          expDate: new Date(food.expDate),
-        }));
-        setFoods(sortFoods(foodsWithDates, sortBy));
-      }
-    } catch (error) {
-      console.error("Error loading foods:", error);
-    }
-  };
-
-  const saveFoods = async (food) => {
-    try {
-      const newFoods = [...foods, { ...food, expDate: new Date(food.expDate) }];
-      setFoods(sortFoods(newFoods, sortBy));
-      await AsyncStorage.setItem("foods", JSON.stringify(newFoods));
-      setModalVisible(false);
+      await saveFoods(foodData);
+      handleCloseModal();
     } catch (error) {
       console.error("Error saving food:", error);
-    }
-  };
-
-  const onDelete = async (index) => {
-    try {
-      const newFoods = foods.filter((_, i) => i !== index);
-      setFoods(newFoods);
-      await AsyncStorage.setItem("foods", JSON.stringify(newFoods));
-    } catch (error) {
-      console.error("Error deleting food:", error);
     }
   };
 
   return (
     <View style={style.container}>
       <ScrollView style={style.foodList}>
-        <FoodList foods={foods} onDelete={onDelete} />
+        <FoodList
+          foods={foods}
+          onDelete={handleDeleteFood}
+          onEdit={handleEditFood}
+        />
       </ScrollView>
 
       <View style={style.footerContainer}>
@@ -112,7 +84,8 @@ const HomeScreen = () => {
           </TouchableOpacity>
 
           <Pressable
-            onPress={() => setModalVisible(true)}
+            // onPress={() => setModalVisible(true)}
+            onPress={handleAddFood}
             style={style.addButton}
           >
             <Image
@@ -132,15 +105,19 @@ const HomeScreen = () => {
       </View>
 
       <FoodModal
+        // visible={modalVisible}
+        // onClose={() => setModalVisible(false)}
+        // onSave={saveFoods}
         visible={modalVisible}
-        onClose={() => setModalVisible(false)}
-        onSave={saveFoods}
+        onClose={handleCloseModal}
+        onSave={handleSaveFood}
+        selectedFood={selectedFood}
       />
-      <FilterModal
+      {/* <FilterModal
         visible={isFilterVisible}
         onClose={() => setIsFilterVisible(false)}
         onSortChange={handleSortChange}
-      />
+      /> */}
     </View>
   );
 };

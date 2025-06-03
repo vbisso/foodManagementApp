@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     width: "100%",
+    marginTop: 10,
   },
   datePickerText: {
     fontSize: 16,

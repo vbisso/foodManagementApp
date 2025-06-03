@@ -15,7 +15,7 @@ const FoodItem = ({ value, onDelete, onEdit }) => {
           <Text>Edit</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => onDelete(value)}
+          onPress={() => onDelete(value.id)}
           style={styles.deleteBtn}
         >
           <Text>Delete</Text>
@@ -30,7 +30,9 @@ const FoodItem = ({ value, onDelete, onEdit }) => {
             Exp Date: {value.expDate.toDateString()}
           </Text>
         </View>
-        <Text style={styles.quantity}>{value.quantity} units</Text>
+        <Text style={styles.quantity}>
+          {value.quantity} {value.unit}
+        </Text>
       </View>
     </SwipeRow>
   );

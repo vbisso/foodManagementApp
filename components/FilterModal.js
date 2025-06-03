@@ -42,6 +42,7 @@ const FilterModal = ({ visible, onClose, onSortChange }) => {
 
   return (
     <Modal
+      style={styles.modal}
       animationType="fade"
       transparent={true}
       visible={visible}
@@ -85,6 +86,9 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.5)",
     justifyContent: "center",
     alignItems: "center",
+  },
+  modal: {
+    maxWidth: "100%",
   },
   modalContent: {
     backgroundColor: "#ECECEC",

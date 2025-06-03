@@ -3,7 +3,7 @@ import { View, Text, Button, StyleSheet } from "react-native";
 import IconFilter from "./IconFilter";
 import FoodItem from "./FoodItem";
 
-const FoodList = ({ foods, onDelete }) => {
+const FoodList = ({ foods, onDelete, onEdit }) => {
   if (foods.length === 0) {
     return (
       <View style={styles.textContainer}>
@@ -17,23 +17,11 @@ const FoodList = ({ foods, onDelete }) => {
       {foods.map((food, index) => (
         <View style={styles.itemContainer} key={index}>
           <FoodItem
+            key={index}
             value={food}
-            onDelete={() => onDelete(index)}
-            onEdit={() => onDelete(index)}
+            onDelete={onDelete}
+            onEdit={onEdit}
           ></FoodItem>
-
-          {/* <IconFilter category={food.category} />
-          <View style={styles.itemTextContainer}>
-            <Text style={styles.itemText}>{food.name}</Text>
-            <Text style={styles.itemText}>
-              Exp. Date: {food.expDate.toDateString()}
-            </Text>
-            <Text style={styles.itemText}>Quantity: {food.quantity}</Text>
-            <Text style={styles.itemText}>View: {food.view}</Text>
-          </View>
-          <View>
-            <Button title="Delete" onPress={() => onDelete(index)} />
-          </View> */}
         </View>
       ))}
     </View>
