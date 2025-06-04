@@ -9,7 +9,6 @@ import {
   View,
 } from "react-native";
 import FoodForm from "./FoodForm";
-
 const { height } = Dimensions.get("window");
 
 const FoodModal = ({ visible, onClose, onSave, selectedFood }) => {
@@ -92,7 +91,7 @@ const styles = StyleSheet.create({
   modalContent: {
     alignItems: "center",
     justifyContent: "center",
-    height: height * 0.58,
+    height: height * 0.6,
     width: "90%",
     backgroundColor: "white",
     padding: 20,

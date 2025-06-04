@@ -15,6 +15,7 @@ import CategoryPicker from "./UI/CategoryPicker";
 import NameInput from "./UI/NameInput";
 import ViewPicker from "./UI/ViewPicker";
 import categoryKeywords from "../assets/data/categories.json";
+import { RFValue } from "react-native-responsive-fontsize";
 
 const FoodForm = ({ onSave, onClose, selectedFood, isEditing }) => {
   const [name, setName] = useState("");
@@ -165,7 +166,7 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   text: {
-    fontSize: 20,
+    fontSize: RFValue(14),
     fontWeight: "450",
     marginBottom: 10,
   },
@@ -187,7 +188,7 @@ const styles = StyleSheet.create({
   },
   cancelBtnText: {
     color: "white",
-    fontSize: 16,
+    fontSize: RFValue(12),
   },
   saveBtn: {
     backgroundColor: "#007AFF",
@@ -199,7 +200,7 @@ const styles = StyleSheet.create({
   },
   saveBtnText: {
     color: "white",
-    fontSize: 16,
+    fontSize: RFValue(12),
   },
   buttonFixPosition: {
     position: "absolute",
@@ -214,7 +215,7 @@ const styles = StyleSheet.create({
   },
   suggestionText: {
     fontStyle: "italic",
-    fontSize: 14,
+    fontSize: RFValue(10),
     color: "#666",
     marginBottom: 8,
     textAlign: "left",

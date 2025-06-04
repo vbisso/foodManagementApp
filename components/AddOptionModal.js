@@ -9,6 +9,7 @@ import {
   Animated,
   Image,
 } from "react-native";
+import { RFValue } from "react-native-responsive-fontsize";
 
 const { height } = Dimensions.get("window");
 
@@ -118,7 +119,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
   },
   title: {
-    fontSize: 18,
+    fontSize: RFValue(14),
     fontWeight: "600",
     marginBottom: 15,
   },
@@ -140,7 +141,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "white",
-    fontSize: 16,
+    fontSize: RFValue(12),
   },
   cancel: {
     position: "absolute",
