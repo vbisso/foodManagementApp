@@ -14,14 +14,17 @@ import FoodModal from "../components/FoodModal";
 import FilterModal from "../components/FilterModal";
 import useFoodData from "../hooks/useFoodData";
 import AddOptionModal from "../components/AddOptionModal";
+import SearchBar from "../components/UI/SearchBar";
+import { RFValue } from "react-native-responsive-fontsize";
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
   const [sortBy, setSortBy] = useState("expDate");
   const [isFilterVisible, setIsFilterVisible] = useState(false);
   const { foods, saveFoods, deleteFood } = useFoodData(sortBy);
   const [selectedFood, setSelectedFood] = useState(null);
   const [optionModalVisible, setOptionModalVisible] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const [searchText, setSearchText] = useState("");
 
   // const handleSortChange = (criterion) => {
   //   setSortBy(criterion); // Update sorting criteria
@@ -53,15 +56,28 @@ const HomeScreen = () => {
       console.error("Error saving food:", error);
     }
   };
+  const serializedFoods = foods.map((food) => ({
+    ...food,
+    expDate: food.expDate.toString(),
+  }));
+  // console.log("Serialized Foods:", serializedFoods);
 
   return (
     <View style={style.container}>
-      {/* <SearchBar></SearchBar> */}
+      <View style={style.searchBarContainer}>
+        <SearchBar
+          style={style.searchBar}
+          searchText={searchText}
+          onSearch={setSearchText}
+        ></SearchBar>
+      </View>
+
       <ScrollView style={style.foodList}>
         <FoodList
           foods={foods}
           onDelete={handleDeleteFood}
           onEdit={handleEditFood}
+          searchText={searchText}
         />
       </ScrollView>
 
@@ -78,7 +94,9 @@ const HomeScreen = () => {
         )}
 
         <View style={style.footer}>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Fridge", { serializedFoods })}
+          >
             <Image
               style={style.fridgeViewButton}
               source={require("../assets/icons/fridge_icon.png")}
@@ -159,6 +177,7 @@ const style = StyleSheet.create({
     position: "absolute",
     bottom: 0,
     width: "100%",
+    backgroundColor: "#fff",
   },
   footer: {
     display: "flex",
@@ -197,7 +216,7 @@ const style = StyleSheet.create({
     alignItems: "center",
   },
   buttonText: {
-    fontSize: 12,
+    fontSize: RFValue(12),
     textAlign: "center",
     color: "#A0A0A0",
   },
@@ -214,9 +233,13 @@ const style = StyleSheet.create({
     height: 30,
   },
   arrowText: {
-    fontSize: 12,
+    fontSize: RFValue(12),
     textAlign: "center",
     color: "#A0A0A0",
+  },
+  searchBarContainer: {
+    marginTop: 10,
+    marginHorizontal: 10,
   },
 });
 

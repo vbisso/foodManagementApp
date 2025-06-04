@@ -1,0 +1,15 @@
+{
+  "Protein": ["eggs", "chickens", "beef", "tofu", "ham"],
+  "Fruit": [
+    "apples",
+    "apple",
+    "banana",
+    "bananas",
+    "oranges",
+    "mangos",
+    "pears"
+  ],
+  "Vegetable": ["carrots", "lettuce", "broccolis", "spinach"],
+  "Grain": ["rice", "bread", "pasta", "oats"],
+  "Dairy": ["milk", "cheese", "yogurt", "butter"]
+}

@@ -1,5 +1,6 @@
 import React from "react";
 import { TextInput, StyleSheet, View, Image } from "react-native";
+import { RFValue } from "react-native-responsive-fontsize";
 
 const SearchBar = ({ searchText, onSearch }) => {
   return (
@@ -34,7 +35,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   input: {
-    fontSize: 16,
+    fontSize: RFValue(12),
   },
   searchImage: {
     width: 22,

@@ -14,6 +14,7 @@ import DatePicker from "./UI/DatePicker";
 import CategoryPicker from "./UI/CategoryPicker";
 import NameInput from "./UI/NameInput";
 import ViewPicker from "./UI/ViewPicker";
+import categoryKeywords from "../assets/data/categories.json";
 
 const FoodForm = ({ onSave, onClose, selectedFood, isEditing }) => {
   const [name, setName] = useState("");
@@ -22,6 +23,7 @@ const FoodForm = ({ onSave, onClose, selectedFood, isEditing }) => {
   const [quantity, setQuantity] = useState(1);
   const [unit, setUnit] = useState("");
   const [view, setView] = useState("");
+  const [suggestedCategory, setSuggestedCategory] = useState("");
 
   // Pre-populate form fields when editing a food item
   useEffect(() => {
@@ -38,6 +40,23 @@ const FoodForm = ({ onSave, onClose, selectedFood, isEditing }) => {
       resetForm();
     }
   }, [selectedFood]);
+
+  //Auto fill category based on name
+  useEffect(() => {
+    if (!name.trim()) {
+      setSuggestedCategory("");
+      return;
+    }
+    const lowerName = name.trim().toLowerCase();
+    let foundCategory = "";
+    for (const [cat, keywords] of Object.entries(categoryKeywords)) {
+      if (keywords.includes(lowerName)) {
+        foundCategory = cat;
+        break;
+      }
+    }
+    setSuggestedCategory(foundCategory);
+  }, [name]);
 
   const resetForm = () => {
     setName("");
@@ -77,19 +96,6 @@ const FoodForm = ({ onSave, onClose, selectedFood, isEditing }) => {
     // Don't reset or close here; parent handles success/error
   };
 
-  // const handleSave = () => {
-  //   if (name && category) {
-  //     onSave({ name, category, expDate: new Date(date), quantity, unit, view });
-  //     setName("");
-  //     setCategory("");
-  //     setDate(new Date());
-  //     setQuantity(1);
-  //     setUnit("");
-  //     setView("");
-  //     onClose();
-  //   }
-  // };
-
   const handleCancel = () => {
     resetForm();
     onClose();
@@ -106,8 +112,15 @@ const FoodForm = ({ onSave, onClose, selectedFood, isEditing }) => {
               {selectedFood ? "Edit Food Item" : "Add Food Item"}
             </Text>
             <NameInput value={name} onChange={setName}></NameInput>
+            {suggestedCategory && !category && (
+              <View style={styles.suggestionContainer}>
+                <Text style={styles.suggestionText}>
+                  Suggested category: {suggestedCategory}
+                </Text>
+              </View>
+            )}
             <CategoryPicker
-              value={category}
+              value={category || suggestedCategory}
               setCategory={setCategory}
             ></CategoryPicker>
             <DatePicker value={date} setDate={setDate}></DatePicker>
@@ -192,6 +205,19 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 0,
     width: "100%",
+  },
+  suggestionContainer: {
+    display: "flex",
+    alignItems: "flex-start",
+    justifyContent: "center",
+    minWidth: "100%",
+  },
+  suggestionText: {
+    fontStyle: "italic",
+    fontSize: 14,
+    color: "#666",
+    marginBottom: 8,
+    textAlign: "left",
   },
 });
 export default FoodForm;

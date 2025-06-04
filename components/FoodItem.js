@@ -3,10 +3,11 @@ import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { SwipeRow } from "react-native-swipe-list-view";
 import Icon from "react-native-vector-icons/Ionicons";
+import { RFValue } from "react-native-responsive-fontsize";
 
 const FoodItem = ({ value, onDelete, onEdit }) => {
   return (
-    <SwipeRow rightOpenValue={-150}>
+    <SwipeRow rightOpenValue={-140}>
       <View style={styles.hiddenRow}>
         <TouchableOpacity
           onPress={() => onEdit(value)}
@@ -42,7 +43,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: "white",
-    height: 75,
+    height: 70,
     borderBottomWidth: 1,
     borderColor: "#ccc",
     minWidth: "100%",
@@ -51,36 +52,35 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   expDate: {
-    fontSize: 16,
+    fontSize: RFValue(12),
   },
   name: {
     fontWeight: "bold",
-    fontSize: 16,
+    fontSize: RFValue(12),
   },
   quantity: {
     marginRight: 10,
-    fontSize: 16,
+    fontSize: RFValue(12),
     position: "absolute",
     right: 0,
   },
   hiddenRow: {
-    flex: 1,
     flexDirection: "row",
     justifyContent: "flex-end",
     backgroundColor: "#eee",
     alignItems: "center",
-    height: "75",
+    height: 70,
   },
   deleteBtn: {
     backgroundColor: "red",
-    width: 75,
+    width: 70,
     justifyContent: "center",
     alignItems: "center",
     height: "100%",
   },
   modifyBtn: {
     backgroundColor: "orange",
-    width: 75,
+    width: 70,
     justifyContent: "center",
     alignItems: "center",
     height: "100%",
