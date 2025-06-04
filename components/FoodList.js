@@ -1,32 +1,50 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, Button, StyleSheet } from "react-native";
-import IconFilter from "./IconFilter";
 import FoodItem from "./FoodItem";
+import SearchBar from "../components/UI/SearchBar";
 
 const FoodList = ({ foods, onDelete, onEdit }) => {
-  if (foods.length === 0) {
-    return (
-      <View style={styles.textContainer}>
-        <Text style={styles.text}>No items found.</Text>
-        <Text style={styles.text}>Start Adding items.</Text>
-      </View>
-    );
-  }
+  const [searchText, setSearchText] = useState("");
+
+  const filteredFoods = foods.filter((food) =>
+    food.name.toLowerCase().includes(searchText.toLowerCase())
+  );
+
   return (
     <View>
-      {foods.map((food, index) => (
-        <View style={styles.itemContainer} key={index}>
-          <FoodItem
-            key={index}
-            value={food}
-            onDelete={onDelete}
-            onEdit={onEdit}
-          ></FoodItem>
+      <SearchBar searchText={searchText} onSearch={setSearchText} />
+
+      {foods.length === 0 ? (
+        <View style={styles.textContainer}>
+          <Text style={styles.text}>No items found.</Text>
+          <Text style={styles.text}>Start adding items.</Text>
         </View>
-      ))}
+      ) : filteredFoods.length === 0 ? (
+        <View style={styles.textContainer}>
+          <Text style={styles.text}>No items found.</Text>
+        </View>
+      ) : (
+        filteredFoods.map((food) => (
+          <View style={styles.itemContainer} key={food.id}>
+            <FoodItem value={food} onDelete={onDelete} onEdit={onEdit} />
+          </View>
+        ))
+      )}
     </View>
   );
 };
+
+// {filteredFoods.length === 0 ? (
+//   <View style={styles.textContainer}>
+//     <Text style={styles.text}>No items found.</Text>
+//   </View>
+// ) : (
+//   filteredFoods.map((food) => (
+//     <View style={styles.itemContainer} key={food.id}>
+//       <FoodItem value={food} onDelete={onDelete} onEdit={onEdit} />
+//     </View>
+//   ))
+// )}
 
 const styles = StyleSheet.create({
   textContainer: {

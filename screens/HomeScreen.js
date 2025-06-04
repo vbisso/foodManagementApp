@@ -13,13 +13,15 @@ import FoodList from "../components/FoodList";
 import FoodModal from "../components/FoodModal";
 import FilterModal from "../components/FilterModal";
 import useFoodData from "../hooks/useFoodData";
+import AddOptionModal from "../components/AddOptionModal";
 
 const HomeScreen = () => {
   const [sortBy, setSortBy] = useState("expDate");
-  const [modalVisible, setModalVisible] = useState(false);
   const [isFilterVisible, setIsFilterVisible] = useState(false);
   const { foods, saveFoods, deleteFood } = useFoodData(sortBy);
   const [selectedFood, setSelectedFood] = useState(null);
+  const [optionModalVisible, setOptionModalVisible] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
   // const handleSortChange = (criterion) => {
   //   setSortBy(criterion); // Update sorting criteria
@@ -28,7 +30,7 @@ const HomeScreen = () => {
 
   const handleAddFood = () => {
     setSelectedFood(null); // Clear selection for new food
-    setModalVisible(true);
+    setOptionModalVisible(true);
   };
   const handleDeleteFood = (index) => {
     deleteFood(index);
@@ -54,6 +56,7 @@ const HomeScreen = () => {
 
   return (
     <View style={style.container}>
+      {/* <SearchBar></SearchBar> */}
       <ScrollView style={style.foodList}>
         <FoodList
           foods={foods}
@@ -83,11 +86,7 @@ const HomeScreen = () => {
             <Text style={style.buttonText}>Fridge</Text>
           </TouchableOpacity>
 
-          <Pressable
-            // onPress={() => setModalVisible(true)}
-            onPress={handleAddFood}
-            style={style.addButton}
-          >
+          <Pressable onPress={handleAddFood} style={style.addButton}>
             <Image
               style={style.addButtonImage}
               source={require("../assets/icons/add_button.png")}
@@ -104,10 +103,19 @@ const HomeScreen = () => {
         </View>
       </View>
 
+      <AddOptionModal
+        visible={optionModalVisible}
+        onClose={() => setOptionModalVisible(false)}
+        onTakePhoto={() => {
+          setOptionModalVisible(false);
+          alert("take photo! :)");
+        }}
+        onManualEntry={() => {
+          setModalVisible(true);
+          setOptionModalVisible(false);
+        }}
+      ></AddOptionModal>
       <FoodModal
-        // visible={modalVisible}
-        // onClose={() => setModalVisible(false)}
-        // onSave={saveFoods}
         visible={modalVisible}
         onClose={handleCloseModal}
         onSave={handleSaveFood}

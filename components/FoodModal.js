@@ -20,8 +20,8 @@ const FoodModal = ({ visible, onClose, onSave, selectedFood }) => {
     setIsModalVisible(true);
     Animated.spring(slideAnimation, {
       toValue: -150,
-      friction: 10,
-      tension: 40,
+      // friction: 5,
+      // tension: 10,
       useNativeDriver: true,
     }).start();
   };
