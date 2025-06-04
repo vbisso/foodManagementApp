@@ -1,19 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, Button, StyleSheet } from "react-native";
 import FoodItem from "./FoodItem";
-import SearchBar from "../components/UI/SearchBar";
+import { RFValue } from "react-native-responsive-fontsize";
 
-const FoodList = ({ foods, onDelete, onEdit }) => {
-  const [searchText, setSearchText] = useState("");
-
+const FoodList = ({ foods, onDelete, onEdit, searchText }) => {
   const filteredFoods = foods.filter((food) =>
     food.name.toLowerCase().includes(searchText.toLowerCase())
   );
 
   return (
     <View>
-      <SearchBar searchText={searchText} onSearch={setSearchText} />
-
       {foods.length === 0 ? (
         <View style={styles.textContainer}>
           <Text style={styles.text}>No items found.</Text>
@@ -34,18 +30,6 @@ const FoodList = ({ foods, onDelete, onEdit }) => {
   );
 };
 
-// {filteredFoods.length === 0 ? (
-//   <View style={styles.textContainer}>
-//     <Text style={styles.text}>No items found.</Text>
-//   </View>
-// ) : (
-//   filteredFoods.map((food) => (
-//     <View style={styles.itemContainer} key={food.id}>
-//       <FoodItem value={food} onDelete={onDelete} onEdit={onEdit} />
-//     </View>
-//   ))
-// )}
-
 const styles = StyleSheet.create({
   textContainer: {
     position: "absolute",
@@ -53,15 +37,15 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   text: {
-    fontSize: 16,
+    fontSize: RFValue(12),
     textAlign: "center",
     paddingTop: 10,
   },
   itemText: {
-    fontSize: 16,
+    fontSize: RFValue(12),
   },
   itemContainer: {
-    padding: 10,
+    paddingHorizontal: 10,
     flex: 1,
     flexDirection: "row",
     alignSelf: "center",
