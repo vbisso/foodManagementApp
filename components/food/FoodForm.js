@@ -9,12 +9,12 @@ import {
   Platform,
   TouchableOpacity,
 } from "react-native";
-import QuantityStepper from "./UI/QuantityStepper";
-import DatePicker from "./UI/DatePicker";
-import CategoryPicker from "./UI/CategoryPicker";
-import NameInput from "./UI/NameInput";
-import ViewPicker from "./UI/ViewPicker";
-import categoryKeywords from "../assets/data/categories.json";
+import QuantityStepper from "../UI/QuantityStepper";
+import DatePicker from "../UI/DatePicker";
+import CategoryPicker from "../UI/CategoryPicker";
+import NameInput from "../UI/NameInput";
+import ViewPicker from "../UI/ViewPicker";
+import categoryKeywords from "../../assets/data/categories.json";
 import { RFValue } from "react-native-responsive-fontsize";
 
 const FoodForm = ({ onSave, onClose, selectedFood, isEditing }) => {
@@ -57,6 +57,10 @@ const FoodForm = ({ onSave, onClose, selectedFood, isEditing }) => {
       }
     }
     setSuggestedCategory(foundCategory);
+    // Auto-set category if it's empty and a suggested one is found
+    if (foundCategory && !category) {
+      setCategory(foundCategory);
+    }
   }, [name]);
 
   const resetForm = () => {
@@ -140,7 +144,13 @@ const FoodForm = ({ onSave, onClose, selectedFood, isEditing }) => {
                 <Text style={styles.cancelBtnText}>Cancel</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity onPress={handleSave} style={styles.saveBtn}>
+              <TouchableOpacity
+                onPress={() => {
+                  handleSave();
+                  resetForm();
+                }}
+                style={styles.saveBtn}
+              >
                 <Text style={styles.saveBtnText}>Save</Text>
               </TouchableOpacity>
             </View>
@@ -204,7 +214,7 @@ const styles = StyleSheet.create({
   },
   buttonFixPosition: {
     position: "absolute",
-    bottom: 0,
+    bottom: 15,
     width: "100%",
   },
   suggestionContainer: {

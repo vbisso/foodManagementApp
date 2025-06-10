@@ -14,62 +14,13 @@ import { RFValue } from "react-native-responsive-fontsize";
 const { height } = Dimensions.get("window");
 
 const AddOptionModal = ({ visible, onClose, onTakePhoto, onManualEntry }) => {
-  const [slideAnimation] = useState(new Animated.Value(1000)); // starts off-screen
-  const [isModalVisible, setIsModalVisible] = useState(false);
-
-  const openModal = () => {
-    setIsModalVisible(true);
-    Animated.spring(slideAnimation, {
-      toValue: -250,
-      friction: 10,
-      tension: 40,
-      useNativeDriver: true,
-    }).start();
-  };
-  const closeModal = () => {
-    setIsModalVisible(false); //closing modal (includes the blurred background)
-    onClose();
-    Animated.spring(slideAnimation, {
-      toValue: 1000,
-      friction: 0,
-      tension: 0,
-      useNativeDriver: true,
-    }).start();
-  };
-
-  // Handle overlay tap to close modal
-  const handleOverlayPress = () => {
-    closeModal();
-  };
-  //open modal when visible changes
-  useEffect(() => {
-    if (visible) {
-      setIsModalVisible(true);
-      openModal();
-    }
-  }, [visible]);
-
   return (
-    <Modal
-      transparent={true}
-      visible={visible}
-      animationType="fade"
-      onRequestClose={onClose}
-    >
-      <TouchableOpacity
-        style={styles.overlay}
-        activeOpacity={1}
-        onPress={handleOverlayPress}
-      >
-        <Animated.View
-          style={[
-            styles.modalContent,
-            { transform: [{ translateY: slideAnimation }] },
-          ]}
-        >
+    <Modal transparent={true} visible={visible} animationType="fade">
+      <View style={styles.overlay}>
+        <View style={styles.modalContent}>
           <TouchableOpacity onPress={onClose} style={styles.cancel}>
             <Image
-              source={require("../assets/icons/cancel_icon.png")}
+              source={require("../../assets/icons/cancel_icon.png")}
               style={styles.cancelIcon}
             ></Image>
           </TouchableOpacity>
@@ -77,7 +28,7 @@ const AddOptionModal = ({ visible, onClose, onTakePhoto, onManualEntry }) => {
           <View style={styles.buttonContainer}>
             <TouchableOpacity style={styles.button} onPress={onTakePhoto}>
               <Image
-                source={require("../assets/icons/camera_icon.png")}
+                source={require("../../assets/icons/camera_icon.png")}
                 style={styles.icon}
               />
               <Text style={styles.buttonText}>Scan Barcode</Text>
@@ -85,14 +36,14 @@ const AddOptionModal = ({ visible, onClose, onTakePhoto, onManualEntry }) => {
 
             <TouchableOpacity style={styles.button} onPress={onManualEntry}>
               <Image
-                source={require("../assets/icons/edit_icon.png")}
+                source={require("../../assets/icons/edit_icon.png")}
                 style={styles.icon}
               ></Image>
               <Text style={styles.buttonText}>Enter Manually</Text>
             </TouchableOpacity>
           </View>
-        </Animated.View>
-      </TouchableOpacity>
+        </View>
+      </View>
     </Modal>
   );
 };
@@ -108,7 +59,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     height: height * 0.4,
-    width: "90%",
+    width: "100%",
     backgroundColor: "white",
     padding: 20,
     borderRadius: 15,
@@ -127,7 +78,8 @@ const styles = StyleSheet.create({
     display: "flex",
     width: "100%",
     flexDirection: "row",
-    justifyContent: "space-between",
+    marginTop: 20,
+    justifyContent: "space-around",
     alignItems: "center",
   },
   button: {

@@ -1,4 +1,4 @@
-import IconFilter from "./IconFilter";
+import IconFilter from "../IconFilter";
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { SwipeRow } from "react-native-swipe-list-view";

@@ -1,6 +1,6 @@
 import { View, Text, Image, StyleSheet } from "react-native";
 const Fridge = ({ navigation, route }) => {
-  const rawFoods = route.params.serializedFoods;
+  const rawFoods = route?.params?.serializedFoods ?? [];
   const foods = rawFoods.map((food) => ({
     ...food,
     expDate: new Date(food.expDate),
@@ -18,21 +18,28 @@ const Fridge = ({ navigation, route }) => {
       <Image
         source={require("../assets/backgrounds/fridgeBackground.png")}
         style={styles.fridgeBackground}
-      ></Image>
+      />
       <View style={styles.fridgeGrid}>
-        {foodRows.map((row, rowIndex) => (
-          <View key={rowIndex} style={styles.fridgeRow}>
-            {row.map((food, index) => (
-              <View key={index} style={styles.foodItem}>
-                <Image
-                  source={require("../assets/icons/dairy_icon.png")}
-                  style={styles.icon}
-                ></Image>
-                <Text>{food.name}</Text>
-              </View>
-            ))}
-          </View>
-        ))}
+        {foodRows.map((row, rowIndex) => {
+          const hasFridgeItem = row.some((food) => food.view === "Fridge");
+          if (!hasFridgeItem) return null; // Skip this row completely
+
+          return (
+            <View key={rowIndex} style={styles.fridgeRow}>
+              {row.map((food, index) =>
+                food.view === "Fridge" ? (
+                  <View key={index} style={styles.foodItem}>
+                    <Image
+                      source={require("../assets/icons/dairy_icon.png")}
+                      style={styles.icon}
+                    />
+                    <Text>{food.name}</Text>
+                  </View>
+                ) : null
+              )}
+            </View>
+          );
+        })}
       </View>
     </View>
   );
@@ -91,7 +98,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 5 },
     shadowOpacity: 0.15,
     shadowRadius: 4,
-    paddingVertical: 25,
+    // paddingVertical: 15,
   },
 
   foodItem: {

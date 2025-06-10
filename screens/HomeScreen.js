@@ -9,11 +9,11 @@ import {
   Pressable,
 } from "react-native";
 
-import FoodList from "../components/FoodList";
-import FoodModal from "../components/FoodModal";
-import FilterModal from "../components/FilterModal";
+import FoodList from "../components/food/FoodList";
+import FoodModal from "../components/modals/FoodModal";
+import FilterModal from "../components/modals/FilterModal";
 import useFoodData from "../hooks/useFoodData";
-import AddOptionModal from "../components/AddOptionModal";
+import AddOptionModal from "../components/modals/AddOptionModal";
 import SearchBar from "../components/UI/SearchBar";
 import { RFValue } from "react-native-responsive-fontsize";
 
@@ -51,7 +51,9 @@ const HomeScreen = ({ navigation }) => {
   const handleSaveFood = async (foodData) => {
     try {
       await saveFoods(foodData);
-      handleCloseModal();
+      setSelectedFood(null);
+
+      // handleCloseModal();
     } catch (error) {
       console.error("Error saving food:", error);
     }
@@ -83,13 +85,19 @@ const HomeScreen = ({ navigation }) => {
 
       <View style={style.footerContainer}>
         {foods.length === 0 && (
-          <View style={style.arrowContainer}>
-            <Image
-              style={style.arrowImage}
-              source={require("../assets/icons/arrow_icon.png")}
-            ></Image>
-
-            <Text style={style.arrowText}> Click here to add an item</Text>
+          <View>
+            <View style={style.arrowContainer}>
+              <Image
+                style={style.arrowImage}
+                source={require("../assets/icons/arrow_icon.png")}
+              ></Image>
+            </View>
+            <View style={style.arrowTextContainer}>
+              <Text style={style.arrowText}>
+                {" "}
+                Click here{"\n"} to add an item
+              </Text>
+            </View>
           </View>
         )}
 
@@ -111,7 +119,7 @@ const HomeScreen = ({ navigation }) => {
             />
           </Pressable>
 
-          <TouchableOpacity onPress={() => setIsFilterVisible(true)}>
+          <TouchableOpacity onPress={() => navigation.navigate("Pantry")}>
             <Image
               style={style.pantryViewButton}
               source={require("../assets/icons/pantry_icon.png")}
@@ -222,19 +230,26 @@ const style = StyleSheet.create({
   },
   arrowContainer: {
     display: "flex",
+    flex: 1,
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 30,
     justifyContent: "center",
-    marginLeft: 155,
+    marginBottom: 35,
+    marginLeft: 5,
+    position: "relative",
   },
   arrowImage: {
     width: 30,
     height: 30,
   },
+  arrowTextContainer: {
+    position: "absolute",
+    top: -10,
+    right: 80,
+  },
   arrowText: {
     fontSize: RFValue(12),
-    textAlign: "center",
+    textAlign: "left",
     color: "#A0A0A0",
   },
   searchBarContainer: {
