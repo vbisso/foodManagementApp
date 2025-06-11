@@ -1,4 +1,4 @@
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, ImageBackground } from "react-native";
 const Fridge = ({ navigation, route }) => {
   const rawFoods = route?.params?.serializedFoods ?? [];
   const foods = rawFoods.map((food) => ({
@@ -15,32 +15,34 @@ const Fridge = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
-      <Image
+      <ImageBackground
         source={require("../assets/backgrounds/fridgeBackground.png")}
         style={styles.fridgeBackground}
-      />
-      <View style={styles.fridgeGrid}>
-        {foodRows.map((row, rowIndex) => {
-          const hasFridgeItem = row.some((food) => food.view === "Fridge");
-          if (!hasFridgeItem) return null; // Skip this row completely
+        resizeMode="cover"
+      >
+        <View style={styles.fridgeGrid}>
+          {foodRows.map((row, rowIndex) => {
+            const hasFridgeItem = row.some((food) => food.view === "Fridge");
+            if (!hasFridgeItem) return null; // Skip this row completely
 
-          return (
-            <View key={rowIndex} style={styles.fridgeRow}>
-              {row.map((food, index) =>
-                food.view === "Fridge" ? (
-                  <View key={index} style={styles.foodItem}>
-                    <Image
-                      source={require("../assets/icons/dairy_icon.png")}
-                      style={styles.icon}
-                    />
-                    <Text>{food.name}</Text>
-                  </View>
-                ) : null
-              )}
-            </View>
-          );
-        })}
-      </View>
+            return (
+              <View key={rowIndex} style={styles.fridgeRow}>
+                {row.map((food, index) =>
+                  food.view === "Fridge" ? (
+                    <View key={index} style={styles.foodItem}>
+                      <Image
+                        source={require("../assets/icons/dairy_icon.png")}
+                        style={styles.icon}
+                      />
+                      <Text>{food.name}</Text>
+                    </View>
+                  ) : null
+                )}
+              </View>
+            );
+          })}
+        </View>
+      </ImageBackground>
     </View>
   );
 };
@@ -51,10 +53,10 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   fridgeBackground: {
+    flex: 1,
     width: "100%",
     height: "100%",
     position: "absolute",
-    padding: 5,
   },
   //   fridgeGrid: {
   //     position: "relative",
@@ -86,6 +88,7 @@ const styles = StyleSheet.create({
     left: "7%",
     width: "72%",
     height: "72%",
+    zIndex: 10,
   },
   fridgeRow: {
     // backgroundColor: "red",

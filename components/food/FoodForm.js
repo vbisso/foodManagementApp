@@ -213,6 +213,7 @@ const styles = StyleSheet.create({
     fontSize: RFValue(12),
   },
   buttonFixPosition: {
+    marginTop: 15,
     position: "absolute",
     bottom: 15,
     width: "100%",

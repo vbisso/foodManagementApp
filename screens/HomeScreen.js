@@ -7,6 +7,7 @@ import {
   ScrollView,
   Image,
   Pressable,
+  ImageBackground,
 } from "react-native";
 
 import FoodList from "../components/food/FoodList";
@@ -62,7 +63,6 @@ const HomeScreen = ({ navigation }) => {
     ...food,
     expDate: food.expDate.toString(),
   }));
-  // console.log("Serialized Foods:", serializedFoods);
 
   return (
     <View style={style.container}>
@@ -103,6 +103,7 @@ const HomeScreen = ({ navigation }) => {
 
         <View style={style.footer}>
           <TouchableOpacity
+            style={style.ButtonContainer}
             onPress={() => navigation.navigate("Fridge", { serializedFoods })}
           >
             <Image
@@ -119,7 +120,10 @@ const HomeScreen = ({ navigation }) => {
             />
           </Pressable>
 
-          <TouchableOpacity onPress={() => navigation.navigate("Pantry")}>
+          <TouchableOpacity
+            style={style.ButtonContainer}
+            onPress={() => navigation.navigate("Pantry")}
+          >
             <Image
               style={style.pantryViewButton}
               source={require("../assets/icons/pantry_icon.png")}
@@ -158,11 +162,16 @@ const HomeScreen = ({ navigation }) => {
 
 const style = StyleSheet.create({
   container: {
+    display: "flex",
+    flexDirection: "column",
     flex: 1,
     backgroundColor: "#fff",
   },
   foodList: {
-    padding: 15,
+    marginTop: 5,
+    paddingBottom: "50%",
+    flex: 1,
+    height: "100%",
   },
   sortContainer: {
     padding: 20,
@@ -191,20 +200,24 @@ const style = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-around",
-    bottom: 0,
+    alignItems: "start",
     backgroundColor: "#fffff",
-    paddingTop: 15,
-    paddingBottom: 30,
     borderTopWidth: 1,
     borderTopColor: "#ccc",
+    paddingTop: 15,
+    paddingBottom: 25,
+  },
+  ButtonContainer: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: 5,
   },
   fridgeViewButton: {
-    paddingVertical: 10,
-    paddingHorizontal: 5,
-    width: 36,
-    height: 56,
     justifyContent: "center",
     alignItems: "center",
+    width: 20,
+    height: 30,
   },
   addButton: {
     paddingHorizontal: 5,
@@ -216,10 +229,8 @@ const style = StyleSheet.create({
     height: 60,
   },
   pantryViewButton: {
-    paddingVertical: 10,
-    paddingHorizontal: 5,
-    width: 40,
-    height: 55,
+    width: 20,
+    height: 30,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -234,13 +245,13 @@ const style = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: 35,
-    marginLeft: 5,
+    marginBottom: 45,
+    marginLeft: 15,
     position: "relative",
   },
   arrowImage: {
-    width: 30,
-    height: 30,
+    width: 22,
+    height: 22,
   },
   arrowTextContainer: {
     position: "absolute",
