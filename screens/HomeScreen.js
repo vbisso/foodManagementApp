@@ -9,6 +9,7 @@ import {
   Pressable,
   ImageBackground,
 } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 
 import FoodList from "../components/food/FoodList";
 import FoodModal from "../components/modals/FoodModal";
@@ -65,7 +66,7 @@ const HomeScreen = ({ navigation }) => {
   }));
 
   return (
-    <View style={style.container}>
+    <LinearGradient colors={["#e8eeff", "#FEFEFF"]} style={style.container}>
       <View style={style.searchBarContainer}>
         <SearchBar
           style={style.searchBar}
@@ -108,7 +109,7 @@ const HomeScreen = ({ navigation }) => {
           >
             <Image
               style={style.fridgeViewButton}
-              source={require("../assets/icons/fridge_icon.png")}
+              source={require("../assets/icons/fridge view icon 2.png")}
             />
             <Text style={style.buttonText}>Fridge</Text>
           </TouchableOpacity>
@@ -116,17 +117,17 @@ const HomeScreen = ({ navigation }) => {
           <Pressable onPress={handleAddFood} style={style.addButton}>
             <Image
               style={style.addButtonImage}
-              source={require("../assets/icons/add_button.png")}
+              source={require("../assets/icons/nav_add icon.png")}
             />
           </Pressable>
 
           <TouchableOpacity
             style={style.ButtonContainer}
-            onPress={() => navigation.navigate("Pantry")}
+            onPress={() => navigation.navigate("Pantry", { serializedFoods })}
           >
             <Image
               style={style.pantryViewButton}
-              source={require("../assets/icons/pantry_icon.png")}
+              source={require("../assets/icons/pantry view icon 1.png")}
             />
             <Text style={style.buttonText}>Pantry</Text>
           </TouchableOpacity>
@@ -156,7 +157,7 @@ const HomeScreen = ({ navigation }) => {
         onClose={() => setIsFilterVisible(false)}
         onSortChange={handleSortChange}
       /> */}
-    </View>
+    </LinearGradient>
   );
 };
 
@@ -165,7 +166,6 @@ const style = StyleSheet.create({
     display: "flex",
     flexDirection: "column",
     flex: 1,
-    backgroundColor: "#fff",
   },
   foodList: {
     marginTop: 5,
@@ -175,9 +175,9 @@ const style = StyleSheet.create({
   },
   sortContainer: {
     padding: 20,
-    backgroundColor: "#f8f8f8",
+    // backgroundColor: "#f8f8f8",
     borderBottomWidth: 1,
-    borderColor: "#ddd",
+    // borderColor: "#ddd",
     height: 140,
     justifyContent: "center",
   },
@@ -194,14 +194,12 @@ const style = StyleSheet.create({
     position: "absolute",
     bottom: 0,
     width: "100%",
-    backgroundColor: "#fff",
   },
   footer: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "start",
-    backgroundColor: "#fffff",
     borderTopWidth: 1,
     borderTopColor: "#ccc",
     paddingTop: 15,
@@ -212,40 +210,55 @@ const style = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     gap: 5,
+    // borderWidth: 1,
   },
   fridgeViewButton: {
     justifyContent: "center",
     alignItems: "center",
-    width: 20,
-    height: 30,
+    width: 65,
+    height: 65,
   },
   addButton: {
-    paddingHorizontal: 5,
+    // paddingHorizontal: 5,
     position: "absolute",
-    top: -30,
+    top: -40,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.15,
+    shadowRadius: 3,
   },
   addButtonImage: {
-    width: 60,
-    height: 60,
+    width: 80,
+    height: 80,
   },
   pantryViewButton: {
-    width: 20,
-    height: 30,
+    width: 55,
+    height: 65,
     justifyContent: "center",
     alignItems: "center",
   },
+  // buttonText: {
+  //   fontSize: RFValue(12),
+  //   textAlign: "center",
+  //   color: "#A0A0A0",
+  //   marginTop: -5,
+  // },
   buttonText: {
     fontSize: RFValue(12),
     textAlign: "center",
-    color: "#A0A0A0",
+    // color: "#4A90E2", // highlight if Fridge is active
+    color: "#555",
+    marginTop: -7,
+    // fontWeight: "500",
   },
+
   arrowContainer: {
     display: "flex",
     flex: 1,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: 45,
+    marginBottom: 40,
     marginLeft: 15,
     position: "relative",
   },
@@ -255,17 +268,24 @@ const style = StyleSheet.create({
   },
   arrowTextContainer: {
     position: "absolute",
-    top: -10,
+    top: -8,
     right: 80,
   },
   arrowText: {
     fontSize: RFValue(12),
     textAlign: "left",
-    color: "#A0A0A0",
+    color: "#555",
   },
   searchBarContainer: {
     marginTop: 10,
     marginHorizontal: 10,
+    borderRadius: 10,
+    overflow: "hidden",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
   },
 });
 

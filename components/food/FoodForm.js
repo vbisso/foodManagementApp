@@ -144,6 +144,15 @@ const FoodForm = ({ onSave, onClose, selectedFood, isEditing }) => {
                 <Text style={styles.cancelBtnText}>Cancel</Text>
               </TouchableOpacity>
 
+              {isEditing && (
+                <TouchableOpacity
+                  onPress={handleCancel}
+                  style={styles.deleteBtn}
+                >
+                  <Text style={styles.deleteBtnText}>Delete</Text>
+                </TouchableOpacity>
+              )}
+
               <TouchableOpacity
                 onPress={() => {
                   handleSave();

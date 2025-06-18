@@ -1,4 +1,5 @@
 import { View, Text, Image, StyleSheet, ImageBackground } from "react-native";
+import getFoodIcon from "../utils/getFoodIcon";
 const Fridge = ({ navigation, route }) => {
   const rawFoods = route?.params?.serializedFoods ?? [];
   const foods = rawFoods.map((food) => ({
@@ -31,7 +32,7 @@ const Fridge = ({ navigation, route }) => {
                   food.view === "Fridge" ? (
                     <View key={index} style={styles.foodItem}>
                       <Image
-                        source={require("../assets/icons/dairy_icon.png")}
+                        source={getFoodIcon(food.category)}
                         style={styles.icon}
                       />
                       <Text>{food.name}</Text>
@@ -96,8 +97,10 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     alignItems: "center",
     borderBottomWidth: 5,
-    borderColor: "white",
+    borderColor: "#E9F4FD",
+    borderRadius: 10,
     shadowColor: "#000",
+
     shadowOffset: { width: 0, height: 5 },
     shadowOpacity: 0.15,
     shadowRadius: 4,

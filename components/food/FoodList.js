@@ -12,8 +12,10 @@ const FoodList = ({ foods, onDelete, onEdit, searchText }) => {
     <View>
       {foods.length === 0 ? (
         <View style={styles.textContainer}>
-          <Text style={styles.text}>No items found.</Text>
-          <Text style={styles.text}>Start adding items.</Text>
+          <Text style={styles.emptyStateTitle}>No items found</Text>
+          <Text style={styles.emptyStateMessage}>
+            Tap the + button below to add your first item
+          </Text>
         </View>
       ) : filteredFoods.length === 0 ? (
         <View style={styles.textContainer}>
@@ -35,6 +37,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     transform: [{ translateY: 250 }],
     alignSelf: "center",
+    alignItems: "center",
   },
   text: {
     fontSize: RFValue(12),
@@ -49,6 +52,19 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     alignSelf: "center",
+  },
+
+  emptyStateTitle: {
+    fontSize: RFValue(16),
+    fontWeight: "600",
+    color: "#333",
+    marginBottom: 5,
+  },
+  emptyStateMessage: {
+    fontSize: RFValue(12),
+    color: "#555",
+    textAlign: "center",
+    paddingHorizontal: 30,
   },
 });
 

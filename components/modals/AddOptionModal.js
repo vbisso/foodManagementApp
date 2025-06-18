@@ -62,17 +62,19 @@ const styles = StyleSheet.create({
     width: "100%",
     backgroundColor: "white",
     padding: 20,
-    borderRadius: 15,
+    borderRadius: 25,
     elevation: 5, // for Android shadow
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 4,
   },
+
   title: {
     fontSize: RFValue(14),
     fontWeight: "600",
-    marginBottom: 15,
+    marginBottom: 20,
+    color: "#333",
   },
   buttonContainer: {
     display: "flex",
