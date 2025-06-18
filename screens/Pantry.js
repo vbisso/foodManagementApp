@@ -1,4 +1,11 @@
-import { View, Text, Image, StyleSheet, ImageBackground } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  ImageBackground,
+  ScrollView,
+} from "react-native";
 import getFoodIcon from "../utils/getFoodIcon";
 const Pantry = ({ navigation, route }) => {
   const rawFoods = route?.params?.serializedFoods ?? [];
@@ -21,7 +28,7 @@ const Pantry = ({ navigation, route }) => {
         style={styles.pantryBackground}
         resizeMode="cover"
       >
-        <View style={styles.pantryGrid}>
+        <ScrollView style={styles.pantryGrid}>
           {foodRows.map((row, rowIndex) => {
             const hasFridgeItem = row.some((food) => food.view === "Pantry");
             if (!hasFridgeItem) return null;
@@ -42,7 +49,7 @@ const Pantry = ({ navigation, route }) => {
               </View>
             );
           })}
-        </View>
+        </ScrollView>
       </ImageBackground>
     </View>
   );
@@ -88,7 +95,7 @@ const styles = StyleSheet.create({
   //   },
   pantryGrid: {
     position: "relative",
-    top: "5%",
+    top: "3.5%",
     width: "95%",
     marginHorizontal: "auto",
     // height: "40%",

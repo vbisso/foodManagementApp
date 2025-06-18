@@ -1,4 +1,11 @@
-import { View, Text, Image, StyleSheet, ImageBackground } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  ImageBackground,
+  ScrollView,
+} from "react-native";
 import getFoodIcon from "../utils/getFoodIcon";
 const Fridge = ({ navigation, route }) => {
   const rawFoods = route?.params?.serializedFoods ?? [];
@@ -21,7 +28,7 @@ const Fridge = ({ navigation, route }) => {
         style={styles.fridgeBackground}
         resizeMode="cover"
       >
-        <View style={styles.fridgeGrid}>
+        <ScrollView style={styles.fridgeGrid}>
           {foodRows.map((row, rowIndex) => {
             const hasFridgeItem = row.some((food) => food.view === "Fridge");
             if (!hasFridgeItem) return null; // Skip this row completely
@@ -42,7 +49,7 @@ const Fridge = ({ navigation, route }) => {
               </View>
             );
           })}
-        </View>
+        </ScrollView>
       </ImageBackground>
     </View>
   );
