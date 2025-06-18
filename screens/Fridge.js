@@ -110,7 +110,6 @@ const styles = StyleSheet.create({
   foodItem: {
     padding: 3,
     alignItems: "center",
-    borderWidth: 1,
   },
   icon: {
     width: 40,
