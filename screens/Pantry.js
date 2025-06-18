@@ -17,7 +17,7 @@ const Pantry = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require("../assets/backgrounds/pantryBackground.png")}
+        source={require("../assets/backgrounds/pantryBackgroundv3.png")}
         style={styles.pantryBackground}
         resizeMode="cover"
       >
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   container: {
     // backgroundColor: "white",
     width: "100%",
-    height: "96%",
+    height: "99%",
     alignSelf: "center",
     justifySelf: "center",
     marginVertical: "auto",
@@ -114,8 +114,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   icon: {
-    width: 50,
     height: 60,
+    width: 60,
   },
 });
 export default Pantry;

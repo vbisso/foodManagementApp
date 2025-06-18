@@ -1,11 +1,10 @@
-import IconFilter from "../IconFilter";
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { SwipeRow } from "react-native-swipe-list-view";
 import Icon from "react-native-vector-icons/Ionicons";
 import { RFValue } from "react-native-responsive-fontsize";
 
-const FoodItem = ({ value, onDelete, onEdit }) => {
+const FoodItem = ({ value, onEdit }) => {
   return (
     // <SwipeRow rightOpenValue={-130}>
     //   <View style={styles.hiddenRow}>
@@ -53,8 +52,8 @@ const styles = StyleSheet.create({
     padding: 12,
     marginVertical: 3,
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.08,
     shadowRadius: 3,
     elevation: 2,
   },

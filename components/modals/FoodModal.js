@@ -11,8 +11,9 @@ import {
 import FoodForm from "../food/FoodForm";
 const { height } = Dimensions.get("window");
 
-const FoodModal = ({ visible, onClose, onSave, selectedFood }) => {
+const FoodModal = ({ visible, onClose, onSave, onDelete, selectedFood }) => {
   // // Handle overlay tap to close modal
+
   const handleOverlayPress = () => {
     onClose();
   };
@@ -28,6 +29,7 @@ const FoodModal = ({ visible, onClose, onSave, selectedFood }) => {
           <FoodForm
             onSave={onSave}
             onClose={onClose}
+            onDelete={onDelete}
             selectedFood={selectedFood}
             isEditing={!!selectedFood}
           />

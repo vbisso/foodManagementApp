@@ -17,7 +17,7 @@ import ViewPicker from "../UI/ViewPicker";
 import categoryKeywords from "../../assets/data/categories.json";
 import { RFValue } from "react-native-responsive-fontsize";
 
-const FoodForm = ({ onSave, onClose, selectedFood, isEditing }) => {
+const FoodForm = ({ onSave, onClose, onDelete, selectedFood, isEditing }) => {
   const [name, setName] = useState("");
   const [category, setCategory] = useState("");
   const [date, setDate] = useState(new Date());
@@ -106,6 +106,11 @@ const FoodForm = ({ onSave, onClose, selectedFood, isEditing }) => {
     onClose();
   };
 
+  const handleDelete = () => {
+    onDelete(selectedFood.id);
+    onClose();
+  };
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <KeyboardAvoidingView
@@ -140,18 +145,17 @@ const FoodForm = ({ onSave, onClose, selectedFood, isEditing }) => {
 
           <View style={styles.buttonFixPosition}>
             <View style={styles.buttonsContainer}>
-              <TouchableOpacity onPress={handleCancel} style={styles.cancelBtn}>
-                <Text style={styles.cancelBtnText}>Cancel</Text>
-              </TouchableOpacity>
-
               {isEditing && (
                 <TouchableOpacity
-                  onPress={handleCancel}
+                  onPress={handleDelete}
                   style={styles.deleteBtn}
                 >
                   <Text style={styles.deleteBtnText}>Delete</Text>
                 </TouchableOpacity>
               )}
+              <TouchableOpacity onPress={handleCancel} style={styles.cancelBtn}>
+                <Text style={styles.cancelBtnText}>Cancel</Text>
+              </TouchableOpacity>
 
               <TouchableOpacity
                 onPress={() => {
@@ -193,16 +197,16 @@ const styles = StyleSheet.create({
   buttonsContainer: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "space-around",
     alignItems: "center",
     width: "100%",
   },
   cancelBtn: {
     backgroundColor: "#B8B7B7",
     paddingVertical: 12,
-    paddingHorizontal: 20,
+    paddingHorizontal: 15,
     borderRadius: 8,
-    width: "40%",
+    width: "30%",
     alignItems: "center",
   },
   cancelBtnText: {
@@ -212,12 +216,24 @@ const styles = StyleSheet.create({
   saveBtn: {
     backgroundColor: "#007AFF",
     paddingVertical: 12,
-    paddingHorizontal: 20,
+    paddingHorizontal: 15,
     borderRadius: 8,
-    width: "40%",
+    width: "30%",
     alignItems: "center",
   },
   saveBtnText: {
+    color: "white",
+    fontSize: RFValue(12),
+  },
+  deleteBtn: {
+    backgroundColor: "#FF0000",
+    paddingVertical: 12,
+    paddingHorizontal: 15,
+    borderRadius: 8,
+    width: "30%",
+    alignItems: "center",
+  },
+  deleteBtnText: {
     color: "white",
     fontSize: RFValue(12),
   },

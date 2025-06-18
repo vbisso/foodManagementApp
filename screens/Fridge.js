@@ -12,7 +12,7 @@ const Fridge = ({ navigation, route }) => {
       array.slice(i * size, i * size + size)
     );
   };
-  const foodRows = chunkArray(foods, 4);
+  const foodRows = chunkArray(foods, 3);
 
   return (
     <View style={styles.container}>
@@ -86,8 +86,8 @@ const styles = StyleSheet.create({
   fridgeGrid: {
     position: "relative",
     top: "5%",
-    left: "7%",
-    width: "72%",
+    left: "3.7%",
+    width: "78%",
     height: "72%",
     zIndex: 10,
   },
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     alignItems: "center",
     borderBottomWidth: 5,
-    borderColor: "#E9F4FD",
+    borderColor: "#E3EEF9",
     borderRadius: 10,
     shadowColor: "#000",
 
@@ -110,10 +110,11 @@ const styles = StyleSheet.create({
   foodItem: {
     padding: 3,
     alignItems: "center",
+    borderWidth: 1,
   },
   icon: {
-    width: 50,
-    height: 60,
+    width: 40,
+    height: 40,
   },
 });
 export default Fridge;

@@ -18,6 +18,7 @@ import useFoodData from "../hooks/useFoodData";
 import AddOptionModal from "../components/modals/AddOptionModal";
 import SearchBar from "../components/UI/SearchBar";
 import { RFValue } from "react-native-responsive-fontsize";
+// import BarcodeScanner from "../components/modals/BarcodeScanner";
 
 const HomeScreen = ({ navigation }) => {
   const [sortBy, setSortBy] = useState("expDate");
@@ -139,6 +140,7 @@ const HomeScreen = ({ navigation }) => {
         onClose={() => setOptionModalVisible(false)}
         onTakePhoto={() => {
           setOptionModalVisible(false);
+
           alert("take photo! :)");
         }}
         onManualEntry={() => {
@@ -150,6 +152,7 @@ const HomeScreen = ({ navigation }) => {
         visible={modalVisible}
         onClose={handleCloseModal}
         onSave={handleSaveFood}
+        onDelete={handleDeleteFood}
         selectedFood={selectedFood}
       />
       {/* <FilterModal
@@ -204,6 +207,7 @@ const style = StyleSheet.create({
     borderTopColor: "#ccc",
     paddingTop: 15,
     paddingBottom: 25,
+    backgroundColor: "#FEFEFF",
   },
   ButtonContainer: {
     display: "flex",

@@ -1,15 +1,136 @@
 {
-  "Protein": ["eggs", "chickens", "chicken", "beef", "tofu", "ham"],
+  "Protein": [
+    "eggs",
+    "chicken",
+    "beef",
+    "tofu",
+    "ham",
+    "pork",
+    "turkey",
+    "fish",
+    "lentils"
+  ],
   "Fruit": [
-    "apples",
     "apple",
+    "apples",
     "banana",
     "bananas",
+    "orange",
     "oranges",
+    "mango",
     "mangos",
-    "pears"
+    "pear",
+    "pears",
+    "berries",
+    "avocados",
+    "kiwi",
+    "kiwis",
+    "grapes"
   ],
-  "Vegetable": ["carrots", "lettuce", "broccolis", "spinach"],
-  "Grain": ["rice", "bread", "pasta", "oats"],
-  "Dairy": ["milk", "cheese", "yogurt", "butter"]
+  "Vegetable": [
+    "carrot",
+    "carrots",
+    "lettuce",
+    "spinach",
+    "broccoli",
+    "pepper",
+    "peppers",
+    "tomato",
+    "tomatoes",
+    "onion",
+    "potato",
+    "cucumber"
+  ],
+  "Grain": [
+    "rice",
+    "bread",
+    "pasta",
+    "noodles",
+    "oats",
+    "cereal",
+    "quinoa",
+    "barley"
+  ],
+  "Dairy": ["milk", "cheese", "yogurt", "butter", "cream", "ice cream"],
+  "Dry Goods": [
+    "flour",
+    "sugar",
+    "rice",
+    "oats",
+    "beans",
+    "lentils",
+    "pasta",
+    "quinoa",
+    "powdered milk",
+    "baking powder",
+    "baking soda",
+    "yeast",
+    "vanilla extract",
+    "cocoa powder"
+  ],
+  "Canned Goods": [
+    "canned tomatoes",
+    "canned beans",
+    "canned corn",
+    "canned tuna",
+    "canned soup",
+    "coconut milk"
+  ],
+
+  "Snacks": [
+    "chips",
+    "crackers",
+    "cookies",
+    "popcorn",
+    "granola",
+    "nuts",
+    "trail mix",
+    "pretzels"
+  ],
+  "Beverages": ["water", "juice", "soda", "tea", "coffee", "milk", "broth"],
+  "Herbs & Spices": [
+    "salt",
+    "pepper",
+    "basil",
+    "oregano",
+    "cinnamon",
+    "thyme",
+    "rosemary",
+    "paprika",
+    "cumin"
+  ],
+  "Oils & Fats": [
+    "olive oil",
+    "vegetable oil",
+    "butter",
+    "lard",
+    "coconut oil",
+    "ghee"
+  ],
+  "Condiments": [
+    "ketchup",
+    "mustard",
+    "mayonnaise",
+    "soy sauce",
+    "vinegar",
+    "hot sauce",
+    "jam",
+    "jelly"
+  ],
+  "Nuts & Seeds": [
+    "almonds",
+    "walnuts",
+    "pecans",
+    "chia seeds",
+    "flax seeds",
+    "pumpkin seeds"
+  ],
+  "Frozen": [
+    "frozen vegetables",
+    "frozen fruit",
+    "frozen pizza",
+    "ice cream",
+    "frozen meat"
+  ],
+  "Seafood": ["salmon", "tuna", "shrimp", "cod", "crab", "lobster"]
 }

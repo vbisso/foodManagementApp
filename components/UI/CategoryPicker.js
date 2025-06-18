@@ -6,9 +6,11 @@ import {
   StyleSheet,
   FlatList,
 } from "react-native";
+import categoriesJSON from "../../assets/data/categories.json";
 
 const CategoryPicker = ({ value, setCategory }) => {
-  const categories = ["Fruit", "Vegetable", "Grain", "Protein", "Dairy"];
+  const categories = Object.keys(categoriesJSON);
+  // console.log("Categories:", categories);
   const [showDropdown, setShowDropdown] = useState(false);
 
   return (
