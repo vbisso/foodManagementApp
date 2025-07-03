@@ -1,0 +1,39 @@
+GET http://localhost:3000/foods/
+
+###
+POST http://localhost:3000/foods
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NjRiZTFjMTc2YTA3N2IzMTBlNTQ1YyIsImlhdCI6MTc1MTQzMjkwOH0.ybkGQe7fkWJTm5YTjgudmV97FJZWRTv0Gv9vxSkFGxE
+
+{
+  "name": "otaku",
+  "quantity": 2,
+  "unit": "Cups",
+  "expDate": "2025-07-20T00:00:00.000Z",
+  "view": "Fridge",
+  "category": "Dairy"
+}
+
+###
+DELETE http://localhost:3000/foods/6864b78590028597a97c8e95
+
+###
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+    "firstName":"leo",
+    "lastName":"bisso",
+  "email": "test22@example.com",
+  "password": "sushi123"
+}
+###
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+
+  "email": "test@example.com",
+  "password": "sushi123"
+}
+###
