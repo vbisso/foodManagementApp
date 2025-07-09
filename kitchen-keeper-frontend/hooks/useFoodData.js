@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { API_BASE_URL } from "../utils/config";
+
+const API = API_BASE_URL;
 
 export default function useFoodData(sortBy) {
   const getToken = async () => {
@@ -24,18 +27,20 @@ export default function useFoodData(sortBy) {
   }, [sortBy]);
 
   useEffect(() => {
-    console.log("Loaded foods from storage or API:", foods);
+    // console.log("Loaded foods from storage or API:", foods);
   }, [foods]);
 
   const loadFoods = async () => {
     try {
       const token = await getToken();
-      const res = await fetch("http://localhost:3000/foods", {
+      const res = await fetch(`${API}/foods`, {
+        // const res = await fetch(`http://10.34.112.249:3000/foods`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
       const data = await res.json();
+      // console.log("API response:", data);
 
       const parsedFoods = data.map((food) => ({
         ...food,
@@ -54,8 +59,8 @@ export default function useFoodData(sortBy) {
 
       const method = newFood._id ? "PUT" : "POST";
       const endpoint = newFood._id
-        ? `http://localhost:3000/foods/${newFood._id}`
-        : "http://localhost:3000/foods";
+        ? `${API}/foods/${newFood._id}`
+        : `${API}/foods`;
 
       const res = await fetch(endpoint, {
         method,
@@ -79,7 +84,7 @@ export default function useFoodData(sortBy) {
     try {
       const token = await getToken();
 
-      await fetch(`http://localhost:3000/foods/${id}`, {
+      await fetch(`${API}/foods/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,

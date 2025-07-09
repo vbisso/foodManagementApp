@@ -1,6 +1,8 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { API_BASE_URL } from "../utils/config";
 
-const API = "http://localhost:3000";
+const API = API_BASE_URL;
+
 export const login = async (email, password) => {
   const res = await fetch(`${API}/auth/login`, {
     method: "POST",
