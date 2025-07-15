@@ -1,3 +1,6 @@
+import { extractFoodData } from "../utils/extractFoodData";
+// import { processUPCResponse } from "./processUPCData";
+// import categoriesJSON from "../assets/data/categories.json";
 export const lookupProductByBarcode = async (barcode) => {
   try {
     const response = await fetch(
@@ -12,20 +15,12 @@ export const lookupProductByBarcode = async (barcode) => {
     );
 
     const data = await response.json();
-    // console.log("UPC API response:", data);
 
     if (data && data.items && data.items.length > 0) {
       const item = data.items[0];
-      console.log("UPC API response:", item);
-      //   console.log("UPC API response:", item.title);
-      return {
-        name: item.title,
-        brand: item.brand,
-        category: item.category,
-      };
+      console.log("UPC response:", item);
+      return item;
     }
-
-    return null;
   } catch (error) {
     console.error("Barcode lookup failed:", error);
     return null;

@@ -5,7 +5,28 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { RFValue } from "react-native-responsive-fontsize";
 import getFoodIcon from "../../utils/getFoodIcon";
 
-const FoodItem = ({ value, onEdit, view }) => {
+const FoodItem = ({
+  value,
+  onEdit,
+  view,
+  onLongPress,
+  onToggleSelect,
+  isSelected,
+  isSelectionMode,
+}) => {
+  const handlePress = () => {
+    if (isSelectionMode) {
+      onToggleSelect();
+    } else {
+      onEdit(value);
+    }
+  };
+
+  // const pressableStyles = [
+  //   styles.rowFront,
+  //   isSelected && { backgroundColor: "#cce5ff" },
+  // ];
+
   if (view === "Fridge" || view === "Pantry") {
     return (
       <TouchableOpacity
@@ -16,14 +37,29 @@ const FoodItem = ({ value, onEdit, view }) => {
           {value.quantity} {value.unit}
         </Text>
         <Image source={getFoodIcon(value.category)} style={styles.icon} />
-        <Text style={styles.iconText}>{value.name}</Text>
+        <Text style={styles.iconText}>
+          {value.name.split(" ").slice(0, 3).join(" ") +
+            (value.name.split(" ").length > 3 ? "..." : "")}
+        </Text>
       </TouchableOpacity>
     );
   }
 
   return (
-    <TouchableOpacity onPress={() => onEdit(value)}>
+    <TouchableOpacity
+      onPress={handlePress}
+      onLongPress={onLongPress}
+      // style={pressableStyles}
+    >
       <View style={styles.rowFront}>
+        {isSelectionMode && (
+          <Icon
+            name={isSelected ? "checkbox" : "square-outline"}
+            size={20}
+            color={isSelected ? "#007AFF" : "#ccc"}
+            style={{ marginRight: 10 }}
+          />
+        )}
         <View style={styles.info}>
           <Text style={styles.name}>{value.name}</Text>
           <Text style={styles.expDate}>

@@ -7,7 +7,6 @@ import {
   ScrollView,
   Image,
   Pressable,
-  ImageBackground,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
@@ -18,12 +17,36 @@ import SearchBar from "../components/UI/SearchBar";
 import { RFValue } from "react-native-responsive-fontsize";
 import useFoodHandlers from "../hooks/useFoodHandlers";
 import { useAuth } from "../context/AuthContext";
+import Icon from "react-native-vector-icons/Ionicons";
 
 // import BarcodeScanner from "../components/modals/BarcodeScanner";
 
 const HomeScreen = ({ navigation }) => {
+  const [selectedIds, setSelectedIds] = useState([]);
+  const isSelectionMode = selectedIds.length > 0;
+
+  const handleLongPress = (id) => {
+    setSelectedIds([id]); //starts selection mode
+  };
+
+  const handleToggleSelect = (id) => {
+    setSelectedIds((prev) =>
+      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
+    );
+  };
+
+  const handleDeleteSelected = () => {
+    selectedIds.forEach((id) => handleDeleteFood(id));
+    setSelectedIds([]);
+  };
+
   const [sortBy, setSortBy] = useState("expDate");
+  const [filterCategory, setFilterCategory] = useState("All");
+  const [showFilterOptions, setShowFilterOptions] = useState(false);
+  const [showSortOptions, setShowSortOptions] = useState(false);
+
   const [searchText, setSearchText] = useState("");
+
   const {
     foods,
     selectedFood,
@@ -38,16 +61,110 @@ const HomeScreen = ({ navigation }) => {
     optionModalVisible,
     setOptionModalVisible,
   } = useFoodHandlers();
-  const { logout } = useAuth();
 
   return (
     <LinearGradient colors={["#e8eeff", "#FEFEFF"]} style={style.container}>
-      <TouchableOpacity onPress={logout} style={style.profileButtonContainer}>
-        <Image
-          style={style.profileButton}
-          source={require("../assets/icons/profile_icon.png")}
-        ></Image>
-      </TouchableOpacity>
+      {/* Solter, Filer and Profile Container */}
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+          paddingHorizontal: 15,
+          paddingVertical: 10,
+          marginTop: 10,
+          // backgroundColor: "red",
+        }}
+      >
+        {/* sort and filter container */}
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "flex-end",
+            alignItems: "center",
+          }}
+        >
+          {/* Sort icon */}
+          <TouchableOpacity
+            onPress={() => setShowSortOptions(!showSortOptions)}
+            style={{ marginRight: 10 }}
+          >
+            <Icon name="swap-vertical-outline" size={24} />
+          </TouchableOpacity>
+
+          {/* Filter icon */}
+          <TouchableOpacity
+            onPress={() => setShowFilterOptions(!showFilterOptions)}
+          >
+            <Icon name="filter-outline" size={24} />
+          </TouchableOpacity>
+        </View>
+        {/* Profile Button */}
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Profile")}
+          // style={style.profileButtonContainer}
+        >
+          <Icon name="ellipsis-horizontal" size={24} />
+        </TouchableOpacity>
+      </View>
+
+      {showSortOptions && (
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "center",
+            marginVertical: 5,
+          }}
+        >
+          <TouchableOpacity onPress={() => setSortBy("expDate")}>
+            <Text
+              style={{
+                marginHorizontal: 10,
+                fontWeight: sortBy === "expDate" ? "bold" : "normal",
+              }}
+            >
+              Exp Date
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => setSortBy("name")}>
+            <Text
+              style={{
+                marginHorizontal: 10,
+                fontWeight: sortBy === "name" ? "bold" : "normal",
+              }}
+            >
+              Name
+            </Text>
+          </TouchableOpacity>
+        </View>
+      )}
+
+      {showFilterOptions && (
+        <View
+          style={{
+            flexDirection: "row",
+            flexWrap: "wrap",
+            justifyContent: "center",
+            marginVertical: 5,
+          }}
+        >
+          {["All", "Fruits", "Dairy", "Meat", "Drinks"].map((cat) => (
+            <TouchableOpacity
+              key={cat}
+              onPress={() => setFilterCategory(cat)}
+              style={{ margin: 5 }}
+            >
+              <Text
+                style={{
+                  fontWeight: filterCategory === cat ? "bold" : "normal",
+                }}
+              >
+                {cat}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      )}
 
       <View style={style.searchBarContainer}>
         <SearchBar
@@ -57,15 +174,36 @@ const HomeScreen = ({ navigation }) => {
         ></SearchBar>
       </View>
 
+      {isSelectionMode && (
+        <TouchableOpacity
+          style={{
+            backgroundColor: "#d9534f",
+            padding: 10,
+            margin: 10,
+            borderRadius: 5,
+          }}
+          onPress={handleDeleteSelected}
+        >
+          <Text style={{ color: "white", textAlign: "center" }}>
+            Delete Selected ({selectedIds.length})
+          </Text>
+        </TouchableOpacity>
+      )}
+
       <ScrollView style={style.foodList}>
         <FoodList
           foods={foods}
           onDelete={(id) => handleDeleteFood(id)}
           onEdit={handleEditFood}
           searchText={searchText}
+          onLongPress={handleLongPress}
+          onToggleSelect={handleToggleSelect}
+          selectedIds={selectedIds}
+          isSelectionMode={isSelectionMode}
+          sortBy={sortBy}
+          filterCategory={filterCategory}
         />
       </ScrollView>
-
       <View style={style.footerContainer}>
         {foods.length === 0 && (
           <View>
@@ -115,7 +253,6 @@ const HomeScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       </View>
-
       <AddOptionModal
         visible={optionModalVisible}
         onClose={() => setOptionModalVisible(false)}
@@ -149,6 +286,7 @@ const style = StyleSheet.create({
     marginHorizontal: 5,
     paddingHorizontal: 12,
   },
+
   profileButton: {
     width: RFValue(22),
     height: RFValue(22),

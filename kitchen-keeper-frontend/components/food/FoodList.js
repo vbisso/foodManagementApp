@@ -3,10 +3,34 @@ import { View, Text, Button, StyleSheet } from "react-native";
 import FoodItem from "./FoodItem";
 import { RFValue } from "react-native-responsive-fontsize";
 
-const FoodList = ({ foods, onDelete, onEdit, searchText, view }) => {
-  const filteredFoods = foods.filter((food) =>
-    food.name.toLowerCase().includes(searchText.toLowerCase())
-  );
+const FoodList = ({
+  foods,
+  onDelete,
+  onEdit,
+  searchText,
+  view,
+  onLongPress,
+  onToggleSelect,
+  selectedIds,
+  isSelectionMode,
+  sortBy,
+  filterCategory,
+}) => {
+  const filteredFoods = foods
+    .filter((food) =>
+      food.name.toLowerCase().includes(searchText.toLowerCase())
+    )
+    .filter((food) =>
+      filterCategory === "All" ? true : food.category === filterCategory
+    )
+    .sort((a, b) => {
+      if (sortBy === "name") {
+        return a.name.localeCompare(b.name);
+      } else if (sortBy === "expDate") {
+        return new Date(a.expDate) - new Date(b.expDate);
+      }
+      return 0;
+    });
 
   return (
     <View>
@@ -29,6 +53,10 @@ const FoodList = ({ foods, onDelete, onEdit, searchText, view }) => {
               onDelete={() => onDelete(food._id)}
               onEdit={() => onEdit(food)}
               view={view}
+              onLongPress={() => onLongPress(food._id)}
+              onToggleSelect={() => onToggleSelect(food._id)}
+              isSelected={selectedIds.includes(food._id)}
+              isSelectionMode={isSelectionMode}
             />
           </View>
         ))

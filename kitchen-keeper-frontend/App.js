@@ -12,6 +12,7 @@ import Pantry from "./screens/Pantry";
 import BarcodeScannerScreen from "./screens/BarcodeScannerScreen";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import { FoodProvider } from "./context/FoodContext";
+import ProfileScreen from "./screens/ProfileScreen";
 
 const Stack = createStackNavigator();
 
@@ -24,6 +25,7 @@ function AppNavigator() {
       {token ? (
         <>
           <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="Profile" component={ProfileScreen} />
           <Stack.Screen name="Scan" component={BarcodeScannerScreen} />
           <Stack.Screen name="Fridge" component={Fridge} />
           <Stack.Screen name="Pantry" component={Pantry} />

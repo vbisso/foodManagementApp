@@ -4,6 +4,7 @@ import { API_BASE_URL } from "../utils/config";
 const API = API_BASE_URL;
 
 export const login = async (email, password) => {
+  // console.log("API:", API);
   const res = await fetch(`${API}/auth/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
