@@ -177,7 +177,7 @@ const HomeScreen = ({ navigation }) => {
       {isSelectionMode && (
         <TouchableOpacity
           style={{
-            backgroundColor: "#d9534f",
+            backgroundColor: "#D32F2F",
             padding: 10,
             margin: 10,
             borderRadius: 5,
@@ -298,9 +298,8 @@ const style = StyleSheet.create({
   },
   foodList: {
     marginTop: 5,
-    paddingBottom: "50%",
+    marginBottom: 150,
     flex: 1,
-    height: "100%",
   },
   sortContainer: {
     padding: 20,

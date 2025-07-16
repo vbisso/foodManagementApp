@@ -13,34 +13,49 @@ const extractQuantityAndUnit = (text) => {
   }
   return { quantity: 1, unit: "" };
 };
+// const matchCategory = (rawCategory) => {
+//   const categoryList = Object.keys(categoriesJSON);
+//   const lowerCategoryList = categoryList.map((c) => c.toLowerCase());
+//   const cleaned =
+//     rawCategory?.split(">").pop()?.trim().toLowerCase() || "other";
+
+//   const similarityResults = stringSimilarity.findBestMatch(
+//     cleaned,
+//     lowerCategoryList
+//   );
+//   const bestMatchIndex = similarityResults.bestMatchIndex;
+//   const bestMatchRating = similarityResults.bestMatch.rating;
+//   const bestMatchTarget = categoryList[bestMatchIndex]; // return original casing
+
+//   console.log("Cleaned category:", cleaned);
+//   console.log("Best match:", similarityResults.bestMatch);
+
+//   if (bestMatchRating > 0.3) {
+//     return bestMatchTarget;
+//   }
+
+//   // // Optional fallback keywords
+//   if (cleaned.includes("chip")) return "Snacks";
+//   // if (cleaned.includes("trail")) return "Trail Mix";
+//   // if (cleaned.includes("bread")) return "Bakery";
+//   if (cleaned.includes("butter")) return "Dairy";
+
+//   return "Other";
+// };
+
 const matchCategory = (rawCategory) => {
-  const categoryList = Object.keys(categoriesJSON);
-  const lowerCategoryList = categoryList.map((c) => c.toLowerCase());
   const cleaned =
     rawCategory?.split(">").pop()?.trim().toLowerCase() || "other";
 
-  const similarityResults = stringSimilarity.findBestMatch(
-    cleaned,
-    lowerCategoryList
-  );
-  const bestMatchIndex = similarityResults.bestMatchIndex;
-  const bestMatchRating = similarityResults.bestMatch.rating;
-  const bestMatchTarget = categoryList[bestMatchIndex]; // return original casing
-
-  console.log("Cleaned category:", cleaned);
-  console.log("Best match:", similarityResults.bestMatch);
-
-  if (bestMatchRating > 0.3) {
-    return bestMatchTarget;
+  for (const [category, keywords] of Object.entries(categoriesJSON)) {
+    for (const keyword of keywords) {
+      if (cleaned.includes(keyword.toLowerCase())) {
+        return category; // Match found
+      }
+    }
   }
 
-  // // Optional fallback keywords
-  if (cleaned.includes("chip")) return "Snacks";
-  // if (cleaned.includes("trail")) return "Trail Mix";
-  // if (cleaned.includes("bread")) return "Bakery";
-  if (cleaned.includes("butter")) return "Dairy";
-
-  return "Other";
+  return "Other"; // No match found
 };
 
 const cleanTitle = (rawTitle) => {

@@ -30,7 +30,6 @@ export default function BarcodeScannerScreen({ navigation }) {
 
   const handleBarCodeScanned = async ({ type, data }) => {
     if (scanLock || scannedUPCs.current.has(data)) {
-      console.log("Duplicate scan skipped:", data);
       return;
     }
 

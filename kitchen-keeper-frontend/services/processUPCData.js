@@ -9,13 +9,12 @@ const apiKey =
     : null);
 
 export const processUPCResponse = async (upcData, categories) => {
-  console.log(`api key: ${apiKey}`);
   try {
     const prompt = `Clean this UPC data and extract:
 - name (include what the item is e.g. Milk, Chicken, Apples)
 - matching category from [${categories.join(", ")}]
 - quantity and unit (e.g. oz, lb, g, ml)
-- an approximate expiration date in YYYY-MM-DD format based on the type of item
+- Give me an approximate expiration date in YYYY-MM-DD format based on the type of item
 
 Here is the data:
 ${JSON.stringify(upcData)}`;
@@ -36,6 +35,7 @@ ${JSON.stringify(upcData)}`;
     );
 
     const result = JSON.parse(response.data.choices[0].message.content);
+    console.log("ChatGPT result:", result);
     return result;
   } catch (err) {
     console.warn(

@@ -17,5 +17,5 @@ export default function getFoodIcon(category) {
     "Herbs & Spices": require("../assets/icons/spices.png"),
   };
   // Fallback to a default icon if category not found
-  return icons[category] || require("../assets/icons/juice_icon.png");
+  return icons[category] || require("../assets/icons/other.png");
 }
